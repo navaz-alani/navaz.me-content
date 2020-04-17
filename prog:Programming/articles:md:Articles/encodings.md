@@ -1,5 +1,7 @@
 # Information Encoding
 *A High Level Overview*
+
+**Navaz Alani**, *Apr 16 2020*
 ****
 
 This document aims to understand what file encodings are, why they are important and
@@ -35,7 +37,7 @@ does one break this binary representation to get back the origial text? If I bre
 `110` and `10` (`6` and `2`), this would translate to `fb` (f->6th letter and b->2nd 
 letter) which is far from the original text `aj`. 
 
-So, to solve this, we can use blocks of a certain length (4 is adequete for this case).
+So, to solve this, we can use blocks of a certain length (4 is adequate for this case).
 Therefore, we write 1 as `0001` instead of `1`. After this modification, `aj` is now
 encoded as `00011010`. To get the text representation back, we break this binary
 representation into blocks of length 4 and convert them back to their respective characters.
@@ -69,7 +71,7 @@ But this looks ugly, so we break it up into blocks of 8:
 01100100`,
 from which it is clearly visible that:
 
-```txt
+```rb
 01101000 => 'h'
 01100101 => 'e'
 01101100 => 'l'
@@ -81,6 +83,19 @@ from which it is clearly visible that:
 01110010 => 'r'
 01101100 => 'l'
 01100100 => 'd'
+```
+
+This can also be seen if the string `hello world` were saved to a text file. The final
+sequence `00001010` (10) is the newline character, equivalent to pressing 'Return' or 
+'Enter'.
+
+```bash
+# save string into file.txt
+$ echo "hello world" > file.txt
+# view the binary data stored in file.txt
+$ xxd -b file.txt
+01101000 01100101 01101100 01101100 01101111 00100000  hello 
+01110111 01101111 01110010 01101100 01100100 00001010  world.
 ```
 
 So now you know about basic text encoding! But what about characters in other languages,
