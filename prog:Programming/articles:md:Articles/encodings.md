@@ -60,9 +60,8 @@ they came up was called ASCII (American Standard Code for Information Interchang
 and it is still being used today (to some extent).
 
 ASCII works for a total 128 characters, so the minimum required block width is 7
-(`2^7=128`). But computers deal in binary, so powers of two. The closest power of two to 7
-is 8. So ASCII uses blocks of length 8. You can see below that the first number in each
-binary block is `0`.
+(`2^7=128`). But computers deal in bytes which contain 8 bits. So ASCII uses blocks of
+length 8. You can see below that the first number in each binary block is `0`.
 
 Therefore, using ASCII, we the string `hello world` is encoded as:
 `0110100001100101011011000110110001101111001000000111011101101111011100100110110001100100`.
