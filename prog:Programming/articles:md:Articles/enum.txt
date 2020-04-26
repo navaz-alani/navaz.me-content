@@ -1,1 +1,2 @@
-encodings%%File Encoding%%A high level overview of file encoding standards and why you can't open a word document using your music player.
+encodings%%Information Encoding%%A high level overview of file encoding standards and why you can't open a word document using your music player.
+programmingLanguagesConcept%%The Essence of Programming Languages%%The significance of programming languages and how computers execute code.
