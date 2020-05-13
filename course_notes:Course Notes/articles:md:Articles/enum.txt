@@ -1,0 +1,2 @@
+m239_course_notes%%Math 239 Intro To Combinatorics%%Course notes for the Math 239 course at UWaterloo, taught Spring 2020
+cs245_course_notes%%CS 245 Logic and Computation%%Course notes for the CS 234 course at UWaterloo, taught Spring 2020
