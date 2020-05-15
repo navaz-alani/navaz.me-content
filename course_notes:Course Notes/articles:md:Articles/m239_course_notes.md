@@ -291,3 +291,141 @@ $\begin{aligned}
 \end{aligned}$
 
 As desired.
+
+### Bijections
+
+Bijections are important tools when it comes to combinatorial proof. They
+enable one to show that two sets have the same size and do so conveniently.
+Let us try to understand bijections. How does one know that two sets have
+equal size?
+
+__Example__: Let $S=\{1,\dots,100\}$ be the set of integers between 1 and 100.
+Let $T=\{1,4,9,16,\dots,10000\}$ be the set of perfect squares between 1 and
+10000.
+
+In this example, clearly, these two sets have the same number of elements.
+A pairing of 1 with 1, 2 with 4, 3 with 9, 4 with 16 and so on all the way
+to 100 with 10000 should make this clear. There are no uncounted elements and
+since there are 100 elements in $S$, the fact that they can be paired uniquely
+with elements in $T$ (with none being left unpaired from $T$ or $S$) shows that
+$T$ has size 100 too. Let us formalize this notion:
+
+__Definition__: A _bijection_ is a mapping $f:S\mapsto T$ satisfying:
+
+  * $\forall x_1,x_2\in S (f(x_1)=f(x_2)) \iff (x_1 = x_2)$
+
+  This says that "For all $x_1,x_2$ in $S$, $f(x_1)=f(x_2)$ if and only if
+  $x_1=x_2$". A function satisfying this property is said to be one-to-one.
+  This is because every element of $S$ maps to a unique element in $T$ under
+  the action of $f$.
+
+  * $\forall y\in T (\exists x\in S [f(x) = y])$
+
+  This says that "For every $y$ in $T$, there exists an $x$ in $S$ which
+  satisfies $f(x) = y$. A function satisfying this property is said to be onto.
+  This is because the image of $S$ under the action of $f$ is the whole of $T$
+  i.e. every element in $T$ can be obtained as a result of the action of $f$ on
+  some value in $S$.
+
+To test that a function is a bijection, it is sufficient to show that it is
+both one-to-one and onto as stated in the above 2 bullets.
+
+__Example__ _(Cont'd.)_: We can now formalize the pairing that was discussed in
+the example above. Define a function $f:S\mapsto T$ like so: $\forall x\in S$,
+we have that $f(x)=x^2$. Let us show that this function satisfies the above two
+properties to be called a bijection.
+
+* _Verify one-to-one_: If we have $x_1,x_2\in S$ such that $f(x_1) = f(x_2)$.
+  This would mean that $x_1^2 = x_2^2$. But since both $x_1,x_2$ are members of
+  $S$, they must be positive. So taking the square root leaves us with
+  $x_1 = x_2$. Therefore, $f$ is one-to-one.
+
+* _Verify onto_: If we have $y\in T$, then by definition, it is a perfect
+  square between 1 and 10000 therefore, its square root must lie between 1 and
+  100, which are the members of $S$. Therefore, we can take $x=\sqrt{y}\in S$
+  and then we get that $f(x) = (\sqrt{x})^2 = y$. This shows that $f$ is onto.
+
+Therefore, the function $f$ is a bijection. We still have to prove that this
+bijection actually gives us the result that the sets $S$ and $T$ have the same
+size.
+
+__THEOREM__: Suppose $S,T$ are two finite sets and $f:S\mapsto T$. Then:
+
+  * If $f$ is one-to-one, then $|S| \leq |T|$
+  * If $f$ is onto, then $|S| \geq |T|$
+  * If $f$ is a bijection, then $|S| = |T|$
+
+__Proof__:
+
+  1. Suppose that $f$ is one-to-one. This means that every element of $S$ maps
+   to a unique element in $T$ under the action of $f$. Therefore, there must be
+   at least $|S|$ elements in $|T|$ i.e. $|S| \leq |T|$.
+  2. Suppose that $f$ is onto. Then, every element in $T$ is the image of some
+   element in $S$. Therefore, by the definition of a function (that an input
+   will always produce the same output), this allows us to see that the size of
+   $S$ is at least the size of $T$ i.e. $|S| \geq |T|$.
+  3. If $f$ is a bijection, it is both one-to-one and onto. Therefore, we see
+  that it must be the case that $(|S| \leq |T|)\land (|S| \geq |T|)$, which
+  leaves us with one option: $|S| = |T|$.
+
+As desired.
+
+There is another method for showing that a function is a bijection. This one
+relies on the inverse of a function, which comes sort of naturally when
+speaking of bijective maps- you need a way to reverse the action of the
+function. Inverse functions will capture this idea and provide yet another
+tool for combinatorial proofs.
+
+#### Inverse Functions
+
+__Definition__ An inverse of a function $f:S\mapsto T$ is a function
+$f^{-1}: T \mapsto S$ which satisfies the following properties:
+
+* $\forall x\in S (f^{-1}(f(x)) = x)$.
+  This says that for every element in $S$, the action of $f$ on $x$ can be
+  undone through the action of $f^{-1}$.
+* $\forall y\in T (f(f^{-1}(y)) = y)$.
+  This says that for every element in $T$, the action of $f^{-1}$ can be
+  undone through the action of $f$.
+
+This definition can be used to verify that a function is an inverse function.
+Now, let us the utility of inverse functions through this theorem:
+
+__THEOREM__: A function $f:S\mapsto T$ has an inverse function if and only if
+it is a bijection.
+
+__Proof__: (_Forwards_) Assume that $f$ has an inverse function
+$f^{-1}:T\mapsto S$. We need to show that $f$ is a bijection.
+
+  * (_Proving that $f$ is one-to-one_) Take $x_1,x_2\in S$ such that
+  $f(x_1)=f(x_2)$. Since $f^{-1}$ is the inverse of $f$, it reverses the
+  action of $f$, so we get
+
+  $f^{-1}(f(x_1)) = f^{-1}(f(x_2)) \implies x_1 = x_2$
+
+  This shows that $f$ is one-to-one.
+
+  * (_Proving that $f$ is onto_) Pick a $y\in T$. We need to find a value
+  $x\in S$ such that $f(x) = y$. Well, take $x = f^{-1}(y)$ and then:
+
+  $f(x) = f(f^{-1}(y)) = y$
+
+  This shows that $f$ is onto and, together with the above, that $f$ is a
+  bijection.
+
+(_Backwards_) Now, let us assume that $f$ is a bijection. Need to show that
+$f$ has an inverse function.
+
+We can construct one as follows: given a $y\in T$, we can find an $x\in S$
+such that $f(x)=y$. This is possible because the assumption of bijection
+means that $f$ is onto. Keeping this in mind, we make the following definition:
+
+Let $f^{-1}:T\mapsto S$ be defined for all $y\in T$, $f^{-1}(y) = x$ as stated
+in the passage above. To prove that $f^{-1}$ is an inverse:
+
+  * Pick an $x\in S$. Say $y = f(x)$. Then: $f^{-1}(y) = f^{-1}(f(x)) = x$.
+  We see that $f^{-1}$ reverses the action of $f$.
+  * Now pick a $y\in T$. Say $x=f^{-1}(y)$. Then: $f(x) = f(f^{-1}(y)) = y$
+
+This completes the proof of the backwards direction and finally proves the
+theorem above.
