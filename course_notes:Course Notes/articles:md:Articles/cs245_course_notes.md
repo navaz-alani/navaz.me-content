@@ -72,6 +72,8 @@ logic.
 * DNA computing
 * Synthetic biology
 
+****
+
 ## Propositional Logic
 
 * In this context, we define __logic__ to be the analysis and appraisal of
@@ -375,3 +377,271 @@ million instructions per second".
 
 Imprecise sentences, caused by qualitative descriptions, can be made precise
 by introducing quantitative measures.
+
+****
+
+## Propositional Language
+
+Here's the general idea behind the formal propositional language.
+
+* Using connectives, one can combine propositions (atomic or compound)
+* Ambiguity is prevented through fully parenthezised formulae which are parsed
+  uniquely
+* When possible, parentheses are dropped in favor of _precedence rules_
+
+We shall construct the $L^p$, which is the formal language of propositional
+logic. We start off by defining the syntax of $L^p$ in which terminology is
+introduced. Then, formulas in $L^p$ are discussed. Equipped with these two,
+we work on some proofs in order to demonstrate the uniqueness of the $L^p$
+language.
+
+### Syntax of $L^p$
+
+$L^p$ is the formal language of propositional logic and it is composed of the
+following symbols:
+
+* Propositional variables: $p,q,r,\dots$ (with or without subscripts) represent
+  propositions, as previously discussed
+* Logical Connectives: $\lnot, \land, \lor, \implies, \iff$ as previously
+  discussed
+
+The following are laguage specifications, with introduction of terminology:
+
+* __Expressions__: finite length strings of symbols in $L^p$. All of
+  $p, pq, (r), (p\land \implies q)$ are expressions in the $L^p$ language.
+* The __Length__ of an expression is defined to be the number of symbols in it
+  * An _empty expression_ is one which has length 0. It is denoted by
+    $\epsilon$, and is not to be mistaken with the empty set, $\emptyset$.
+* Two expressions $U$and $V$ are __equal__ iff they are of the same length and
+  have the same symbols in the same order.
+* Expressions are scanned from left to right, like reading English.
+* __Concatenation__ of two expressions $U$ and $V$ (in that order) is denoted
+  by $UV$. Note that $\epsilon U = U \epsilon = U$.
+* If $U = W_1VW_2$ where $U, V, W_1, W_2$ are expressions, then we define
+  * $V$ is a __segment__ of $U$
+  * A __proper segement__ of $U$ is defined to be the case when $V\neq U$ and
+    $V$ is non-empty
+* If $U=VW$, where $U,V,W$ are expressions, then we define
+  * $V$ to be an initial segement (prefix) of $U$
+  * $V$ to be an terminal segement (suffix) of $U$
+
+### Well-formed Formulae
+
+__Definition__: An __atom (atomic formula)__ is an expression consisting of a
+prepositional variable only. The set of atomic formulae in $L^p$ is denoted by
+$Atom(L^p)$.
+
+__Definition__: An   expression in $L^p$is called a __formula__ (a well-formed
+propositional formula) iff it can be constructed according to the following
+_rules of formation_:
+
+1. Every atomic formula is a formula
+2. If $A$ is an atomic formula, then so it $(\lnot A)$
+3. If $A,B$ are formulae, then so are
+   $(A \land B), (A \lor B), (A \implies B), (A \iff B)$
+
+the set of all formulae in $L^p$ is denoted by $Form(L^p)$. It is the smallest
+class of expressions of $L^p$ that contains $Atom(L^p)$ and is closed under the
+formation rules of formulae.
+
+__Example__: Generating formulae.
+
+Let $F = ((p\lor q) \implies ((\lnot p) \iff (p \land q)))$ be an element in
+$Form(L^p)$ and $p,q,r$ are elements in $Atom(L^p)$. How is $F$ generated from
+the rules of formation?
+
+By rule 1, the atomic propositional variables are themselves formulae.
+With these propositional variables, one can form the formulae $A = (p\lor q)$,
+$B = (p\land q)$, using rule 3. Another formula, $C = (\lnot p)$ can be formed
+by rule 2 applied to $p$. Then, $D = (C \iff B)$ can be formed by rule 3.
+Finally, $F = (A \implies D)$ can be formed using rule 3 yet again.
+
+As you can see, a formula in $L^p$ can be built from the bottom up, using the
+rules of formation.
+
+__Example__: Parsing formulae
+
+Take the following complex sentence in the English language
+
+> "If Michelle wins at the olympics, everyone will admire her and she will get
+> rich, but if she does not win, all her effort was in vain."
+
+To translate this sentence to the language of propositional logic, we first
+isolate the atomic propositions in the sentence (notice how each proposition
+is sure to have a subject and an action):
+
+* $p =$ Michelle wins at the Olympics
+* $q =$ Everyone admires Michelle
+* $r =$ Michelle will get rich
+* $s =$ Michelle's effort was in vain
+
+Then, the compound sentence (compound proposition) above can be expressed as
+follows:
+
+$((p\implies (q\land r)) \land ((\lnot p) \implies s))$
+
+__Parse Trees__: A parse tree can be used to analyse formulae too. Have a look
+at the parse tree of $((p \land (\lnot q)) \implies r)$ (Forgive my directory
+structure rendering of a parse tree).
+
+$((p \land (\lnot q)) \implies r)$  
+$│$  
+$├─ (p\land (\lnot q))$  
+$│\hspace{1em} ├─ p$  
+$│\hspace{1em} │$  
+$│\hspace{1em} \hspace{2px}↳ (\lnot q)$  
+$│\hspace{3em} \hspace{2px}↳ q$  
+$│$  
+$\hspace{2px}↳ r$  
+
+__Question__: Can a formula be of two (or more) kinds?
+For example, can a formula be both a conjunction and an implication?
+This is important when it comes to understanding the place for ambiguity in
+$L^p$.
+
+Here are some claims about $L^p$ that we intend to prove.
+
+* Every formula in $L^p$ has the same number of occurences of left and right
+  parentheses.
+* Any proper initial segment of a formula in $L^p$ has more occurrences of left
+  than right parentheses. Any proper terminall segment of a formula in $L^p$
+  has fewer occurrences of left compared to right parentheses.
+* Neither a proper initial segment/proper terminal segment can be a formula in
+  $L^p$.
+
+__Unique Readability Theorem__ Every formula in $L^p$ is exactly one of the
+six forms: an atom, $(\lnot A)$, $(A\land B)$, $(A \lor B)$, $(A\implies B)$
+and $(A\iff B)$, and it is so in exactly one way.
+
+How can we prove such claims? Let us borrow some guidance from
+_mathematical induction_. But first, a review of the natural numbers.
+
+#### Natural Numbers
+
+The natural numbers are the set of numbers that we use to count, namely
+0, 1, 2, 3, 4 and so on. These numbers form an unbounded sequence. They
+include 0 because it is the number with which a count actually starts- one
+starts counting at 0 and increases it with each object/entity counted.
+
+Suppose $P$ names a property. We write '$P(2)$' to mean that that '2 has the
+property $P$' or '$P$ holds for 2'.
+
+A statement 'Every natural number has property $P$' actually corresponds to
+a set of statements: $P(0), P(1), P(2), \dots$.
+
+#### Mathematical Induction
+
+Here is the essential principle of mathematical induction. Suppose that we
+establish two things:
+
+* the natural number $n$ has property $P$ (__BASIS__)
+* when a natural number has property $P$, the next natural number also has
+  property $P$ (__INDUCTIVE STEP__)
+
+$\implies$ We may conclude that every natural number greater than or equal to
+$n$ has property $P$.
+
+Why does this work? Well, one needs to understand the definition of natural
+numbers. The natural numbers are defined recursively (in a self-referential
+manner). At a high level: let the $n$-th natural number be denoted by $N_n$.
+Define $N_0 = 0$ (let the first natural number be 0), and then for $n \geq 1$,
+we define $N_n = 1 + N_{n - 1}$ (define every natural number after the first to
+be 1 plus the previous natural number). Now of course, no one would take this
+definition seriously as the natural numbers are used to define themselves- the
+actual definition of the natural numbers involves sets and an idea similar to
+the one presented above.
+
+So, if the first natural number has a property $P$, and for any number that has
+the property $P$, the next number has property $P$ too, here's what happens.
+Since $P$ holds for 0, it starts a domino effect- the next one, 1, also has
+property $P$, and therefore 2 has property $P$ and so on...
+
+__Takeaways__: Here's what we can take away from the above insight into
+natural numbers and mathematical induction.
+
+* To talk about something, give it a name e.g. a property $P$, a number $k$
+* A formula is a textual object. In this object, we can substitute one symbol
+  or expression for another.
+* The induction principle describes a method for proof consisting of two parts
+  * The basis and inductive steps
+  * In the inductive step, hypothesize $P(k)$ (this is called the
+    __inductive hypothesis__) and prove $P(k+1)$ using it.
+
+__NOTE__: The process of induction does not specify how to use the inductive
+hypothesis to prove the next case, or how to prove the basis. In each problem,
+these steps will be different.
+
+#### Induction for $L^p$
+
+Suppose one wants to prove that every formula in $L^p$ property $P$. Well, it
+turns out that we cannot use induction above because a formula is not a natural
+number. However, we can force manipulate the situation to approach the proof
+using an induction based solution. We can choose to prove any of the following:
+
+* For all natural numbers $n$, every formula with $n$ or fewer symbols in it has
+  property $P$.
+* For all natural numbers $n$, every formula with $n$ or fewer connectives has
+  property $P$.
+* For all natural numbers $n$, every formula whose parse tree has height $n$ or
+  less has property $n$.
+* For all natural numbers $n$, every formula reproducible with $n$ or less
+  applications of the formation rules has property $P$.
+
+Note that the inductive step for each of these would require showing, by cases,
+that if $P(A)$ and $P(B)$, then $P((\lnot A))$ and $P((A\star B))$ (where
+$\star$ is one of $\land, \lor, \implies, \iff$). Formulae $A,B$ have smaller
+$n$ values than $(\lnot A)$ and $(A\star B)$.
+
+We concoct a principle of induction which can be used in this case:
+
+#### Structural Induction
+
+The __Principle of Structural Induction__ says: Suppose $R$ is a property. If:
+
+1. For any atomic formula $p$ in $Atom(L^p)$, $R$ holds for $p$
+2. For any formula $A$ in $Form(L^p)$, if $R(A)$, then $(\lnot A)$ has property
+   $R$ too
+3. For all formulae $A,B$ in $Form(L^p)$, if $R(A)$ and $R(B)$, then
+   $(A\star B)$ (where $\star$ is one of $\land, \lor, \implies, \iff$) has
+   property $R$ too.
+
+then, any formula in $Form(L^p)$ has property $R$.
+
+Here is an example of structural induction in action. Suppose we want to prove
+the following lemma, which is one of the claims made about $L^p$ above that
+needs a proof.
+
+__Lemma__: Every well-formed formula has an equal number of left and right
+parentheses.
+
+__Proof__: Before starting, for convenience, we define: for all formulae $A$
+in $Form(L^p)$, $l(A)$ is the number of left parentheses in $A$ and $r(A)$ is
+the number of right parentheses in $A$.
+Also, let the property being proven be called property $R$.
+
+_Base Case_: If $A$ is an atom, then it has no parentheses. Therefore,
+$l(A) = r(A) = 0$ and so $R(A)$. The base case holds.
+
+_Inductive Step_: In this step, we shall consider three formulae $A,B$ and $C$,
+for which it the inductive hypothesis that R holds for $A,B$ and $C$ is
+assumed.
+
+* Assume $A$ is of the form $(\lnot B)$. By the inductive hypothesis, $l(B) = r(B)$.
+  Therefore:
+
+  $\begin{aligned}
+    l((\lnot B)) &= 1 + l(B) \hspace{1em}\text{[By inspection]}\\
+    &= 1 + r(B) \hspace{1em}\text{[By inductive hypothesis]}\\
+    &= r((\lnot B)) \hspace{1em}\text{[By inspection]}
+  \end{aligned}$
+
+* Assume $A$ is of the form $(B\star C)$. By the inductive hypothesis,
+  $l(B) = r(B)$ and $l(C) = r(C)$. Therefore:
+
+  $\begin{aligned}
+    l((B\star C)) &= 1 + l(B) + l(C) \hspace{1em}\text{[By inspection]}\\
+    &= 1 + r(B) + r(C) \hspace{1em}\text{[By inductive hypothesis]}\\
+    &= r((B\star C)) \hspace{1em}\text{[By inspection]}
+  \end{aligned}$
+
+Therefore, property $R$ holds for all well-formed formulae in $L^p$.
