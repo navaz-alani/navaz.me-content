@@ -1,4 +1,4 @@
-# Intro to Logic and Computation Course Notes
+# Intro to Logic and Computation
 
 Navaz Alani
 _Spring 2020_
@@ -499,21 +499,26 @@ For example, can a formula be both a conjunction and an implication?
 This is important when it comes to understanding the place for ambiguity in
 $L^p$.
 
-Here are some claims about $L^p$ that we intend to prove.
+Here are some claims about $L^p$ that we intend to prove, we shall refer to
+them as $(\clubs)$.
 
 * Every formula in $L^p$ has the same number of occurences of left and right
   parentheses.
 * Any proper initial segment of a formula in $L^p$ has more occurrences of left
-  than right parentheses. Any proper terminall segment of a formula in $L^p$
+  than right parentheses. Any proper terminal segment of a formula in $L^p$
   has fewer occurrences of left compared to right parentheses.
 * Neither a proper initial segment/proper terminal segment can be a formula in
   $L^p$.
+
+$(\clubs)$ are all claims which help one prove an even greater claim- the one
+which we are interested in.
 
 __Unique Readability Theorem__ Every formula in $L^p$ is exactly one of the
 six forms: an atom, $(\lnot A)$, $(A\land B)$, $(A \lor B)$, $(A\implies B)$
 and $(A\iff B)$, and it is so in exactly one way.
 
-How can we prove such claims? Let us borrow some guidance from
+This theorem obliterates questions about ambiguity of formulae in $L^p$.
+But how can we prove such claims? Let us get some guidance from
 _mathematical induction_. But first, a review of the natural numbers.
 
 #### Natural Numbers
@@ -575,7 +580,7 @@ these steps will be different.
 
 Suppose one wants to prove that every formula in $L^p$ property $P$. Well, it
 turns out that we cannot use induction above because a formula is not a natural
-number. However, we can force manipulate the situation to approach the proof
+number. However, we can manipulate the situation to approach the proof
 using an induction based solution. We can choose to prove any of the following:
 
 * For all natural numbers $n$, every formula with $n$ or fewer symbols in it has
@@ -608,8 +613,7 @@ The __Principle of Structural Induction__ says: Suppose $R$ is a property. If:
 then, any formula in $Form(L^p)$ has property $R$.
 
 Here is an example of structural induction in action. Suppose we want to prove
-the following lemma, which is one of the claims made about $L^p$ above that
-needs a proof.
+the following lemma, which is the first of the claims in $(\clubs)$.
 
 __Lemma__: Every well-formed formula has an equal number of left and right
 parentheses.
@@ -645,3 +649,169 @@ assumed.
   \end{aligned}$
 
 Therefore, property $R$ holds for all well-formed formulae in $L^p$.
+
+We can now move on and use the tool of structural induction as the proof method
+for the unique readability theorem. Before proceeding, a small discussion to
+build some intuition about the the proof...
+
+Let us try to see what happens when trying to interpret a well-formed formula
+in $L^p$ as something that it is not. Consider the implication
+$F=((p\land q) \implies r)$. We want to show that this is an implication and
+not a conjunction. Let's do both to see where parsing the formula as a
+conjunction fails.
+
+If we parse the formula in $F$ as an implication, it would look something like:
+let $A=(p\land q)$ and $B=r$, then $F=(A\implies B)$, where $A$ and $B$ are
+well-formed formulae in $L^p$ (one can check by following the rules of
+formation until the formula has been constructed from the atoms $p,q,r$).
+
+Now, if we try to parse the formula as a conjunction, here is what it would
+look like: let $A'=(p$ and $B'=q) \implies r$, and $F=(A'\land B')$. However,
+this is not a valid parse since $A'$ and $B'$ are not valid formulae (by the
+lemma just proven above about equal number of left and right parentheses in a
+well-formed formula in $L^p. They also fail to be constructible from the rules
+of formation).
+
+What does this show us? We managed to prove that $F$ cannot be parsed as a
+conjunction because upon decomposition, one does not end up with two
+well-formed formulae as specified by $L^p$. But can we be sure that this holds
+all the time?
+
+#### Unique Readability Theorem
+
+Now, let us approach the unique readability theorem by rephrasing it as a
+property $P(n)$ which is stated below. Note that the notation $l(x)$ and $r(x)$
+for the number of left and right parentheses in expression $x$ will continue to
+be used.
+
+__Property $P(n)$__:
+
+Every formula, $A$, containing at most $n$ connectives satisifies all of the
+following conditions:
+
+1. The first symbol of $A$ is either a '(' (right parenthesis) or a
+   propositional variable
+2. A has an equal number of right and left parentheses and every
+   _proper initial segment_ of $A$ has more left parentheses than right.
+3. A has a unique construction as a formula.
+
+Where a __proper initial segement__ is defined to be a non-empty expression $x$
+such that $A$ is $xy$ for some non-empty expression $y$.
+
+__Proof__: (Using structural induction, of course)
+
+_Base case_: The base case is $n=0$, which is a formula with no logical
+connectives. This has to be a propositional variable, so condition 1 is
+satisfied. Secondly, a propositional variable has no parentheses so the first
+part of condition 2 is satisfied. Since $A$, in this case has no proper initial
+segments, the second part of condition 2 is vacuously satisfied.
+
+_Inductive step_: (This is going to be a bit longer...) The inductive
+hypothesis is that the property $P(k)$ holds for some $0 < k\in \mathbb{N}$,
+meaning that it holds for formulae with at most $k$ logical connectives.
+We now need to prove, using this hypothesis, that $P$ holds for $k+1$.
+So let $A$ be a formula with $k+1$ logical connectives.
+
+_Unary connective_: If $A$ is of the form $(\lnot B)$ for some formula $B$,
+which has $k$ connectives and therefore satisfies conditions 1, 2 and 3, by the
+inductive hypothesis.
+
+1. Clearly, the first symbol of $A$ is a '(', so condition 1 is fulfilled.
+2. Since $B$ satisfies condition 1, $(\lnot B)$ has an equal number of left
+   and right parentheses too- $A$ satisfies the first half of the second
+   condition. Now to prove the second half, we analyse the possible proper
+   initial segments, $x$, of $A$:
+   * If $x$ is "$($", then $l(x) > r(x)$
+   * If $x$ is "$(\lnot$", then $l(x) > r(x)$
+   * If $x$ is "$(\lnot$"$z$, where $z$ is some proper initial segment of $B$,
+     since $B$ satisfies condition 2, we have that $l(z) > r(z)$ but
+     $l(x) = 1 + l(z)$ and $r(x) = r(z)$ which means that $l(x) > r(x)$.
+   * If $x$ is "$(\lnot$"$B$, then since $l(B) = r(B)$, we have that
+     $l(x) > r(x)$.
+   Together, these cases show that $A$ satisfies condition 2.
+3. Since $B$ has a unique construction as a formula, so does $A$- It is the
+   negation of the uniquely constructued formula $B$.
+
+_Binary Connectives_: If $A$ is of the form $(B\star C)$ where $\star$
+represents a logical binary connective and $B,C$ are formulae with at most $k$
+connectives, property $P$ holds for them.
+
+To prevent repetition, it is simply stated that the proof of the conditons 1
+and 2 is very similar to the ones done for the proof in the unary connecive
+case. What remains is to prove the 3rd condition- let's do it!
+
+To prove the unique construction of $A$, we shall prove that if $A$ can be
+decomposed as $(A'\star B')$ for some binary connective $\star$ and formulae
+$A',B'$, then it must be the case that $B'=B$ and $C'=C$.
+For clarity, we mean that the two decompositions,
+$(B'\star C')$ and $(B\star C)$, are of the same formula (same length and
+sequence of symbols in the same order).
+
+* _Case 1_: If $B'$ has the same length as $B$, they must be the exact same
+  string of symbols as they both begin at the second character of $A$.
+* _Case 2_: If $B'$ is a proper prefix of $B$ (i.e. $B'$ has length less than
+  the length of $B$). Now, since $B'$ and $B$ are both formulae with at most
+  $k$ connectives, the inductive hypothesis holds for them.
+
+  But this would mean that by condition 2, $B'$ has the same number of left and
+  right parentheses. However, by the same condition applied to $B$, we see that
+  any proper prefix of $B$ (namely $B'$) must have fewer left than right
+  parentheses. So assuming that $B'$ is a proper suffix of $B$ clearly
+  contradicts itself and therefore must be false.
+* _Case 3_: Proven same as case 2 above.
+
+Since case 2 and 3 contradict themselves, the only valid case is case 1, which
+implies that $B'=B$ (and also $C'=C$). Therefore, the two decompositions of $A$
+are the exact same and this shows that $A$ is uniquely constructed.
+$\blacksquare$
+
+_Fun fact_: In mathematical proofs, the black square ($\blacksquare$) indicates
+the end of a proof. It is used in the same manner here.
+
+This proof proved the unique readability theorem (condition 3), but conditions
+1 and 2 were required to prove it.
+
+##### Consequences
+
+Equipped with the a proven unique readability theorem, we can claim the
+following now:
+
+$\dagger$ A propositional variable is called an atom
+
+$\dagger$ $(\lnot B)$ is called a negation formula
+
+$\dagger$ $(A \land B)$ is called a conjunction formula
+
+$\dagger$ $(A \lor B)$ is called a disjunction formula
+
+$\dagger$ $(A \implies B)$ is called a implication formula
+
+$\dagger$ $(A \iff B)$ is called an equivalence formula
+
+... and each is exactly of one kind.
+
+This is important, as stated before, because the meaning of these formulae is
+going to be derived from their syntax, so this ensures unambiguity.
+
+#### Connective Precedence
+
+For human beings, the following precedence rules are established:
+
+* $\lnot$ takes precedence over $\land$
+* $\land$ takes precedence over $\lor$
+* $\lor$ takes precedence over $\implies$
+* $\implies$ takes precedence over $\iff$
+
+This allows some parentheses to be elided without loss of meaning or ambiguity:
+
+$p\iff q \implies r$ can be expanded, using these precedence rules, to be
+$((p\iff q) \implies r)$.
+
+#### Scope
+
+* If $A$ is of the form $(\lnot B)$, then we say that $B$ is the
+  _scope of negation_ in $A$.
+* If $A$ is of the form $(B\star C)$ (where $\star$ is a binary logical
+  connective), then we say that $B$ is the _left scope_ of the connective
+  (disjunction/conjunction/...) in $A$ and $C$ is the _right scope_ of the
+  connective in $A$.
