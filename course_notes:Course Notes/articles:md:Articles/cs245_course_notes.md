@@ -228,15 +228,14 @@ _Obeservations_:
 
 * In English, we usually take shortcuts that are not allowed in logic statements.
 "He eats and drinks" really means "he eats and he drinks".
-* In logic, every statement must have its own subject and its own predicate
-* .
-Now taking $p =$ "He eats" and $q =$ "he drinks", our sentence becomes $p\wedge q$
+* In logic, every statement must have its own subject and its own predicate.
+  Taking $p =$ "He eats" and $q =$ "he drinks", our sentence becomes $p\wedge q$
 * Sometime, we use words other than "and" to denote a conjunction: "but", "in
 addition to" and "moreover"
 * Not all instances of "and" are for conjunction: "Jack and Jill are cousins".
 In this case "and" is not a conjunction at all.
 
-__DISJUNCTION__: (Definition) Let $p$ and $q$ be propositions. Then, $p lor q$
+__DISJUNCTION__: (Definition) Let $p$ and $q$ be propositions. Then, $p \lor q$
 is False if and only if both $p$ and $q$ are True. If $p$, $q$ or both are True,
 then $p\lor q$ is True.
 
@@ -294,14 +293,10 @@ _Observations_:
 
 * If $p$ is False, then $q$ is _vacuously True_ since in such a case, the
 verification of $p\implies q$ does not require anything to deduce $q$ from $p$.
-Although this may seem unusual, this does not yield any inconsistency with
-everyday speech:
+More formally, __vacuous__ truth is when an implication is true, only because
+its antecedent cannot be satisfied.
 
-> "If the sun will rise from the West, then I will eat my hat"
-
-This statement will never be contradicted and in that sense, it is True. A
-contradiction is not possible because "The sun will rise from the West" is
-False. The following are logically equivalent:
+The following are logically equivalent:
 
 * $p\implies q$
 * If $p$, then $q$
@@ -813,5 +808,5 @@ $((p\iff q) \implies r)$.
   _scope of negation_ in $A$.
 * If $A$ is of the form $(B\star C)$ (where $\star$ is a binary logical
   connective), then we say that $B$ is the _left scope_ of the connective
-  (disjunction/conjunction/...) in $A$ and $C$ is the _right scope_ of the
+  (disjunction, conjunction, ...) in $A$ and $C$ is the _right scope_ of the
   connective in $A$.
