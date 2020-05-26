@@ -1144,7 +1144,7 @@ assigned the same truth values under any truth valuation.
 
 __Notes__:
 
-* "(Tauto)logically rightarrow" $A\models B$ is different from the meaning of
+* "(Tauto)logically implies" $A\models B$ is different from the meaning of
   the implication $(A\rightarrow B)$. By its definition, $A\models B$ iff
   $(A\rightarrow B)$ is a tautology.
 * "(Tauto)logically equivalent" ($A\models\!\mid B$) is different from the
