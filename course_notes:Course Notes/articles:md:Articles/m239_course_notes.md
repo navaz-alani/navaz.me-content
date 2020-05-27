@@ -437,7 +437,7 @@ $w:S\mapsto \{0,1,2,3,\dots\}$.
 
 _Question_: How many $\delta \in S$ such that $w(\delta) = k$?
 
-__Examples__
+__Examples__:
 
 1. With $S=\{a,b,c\}$ and $w:S\mapsto \{0,1,2,3,\dots\}$ defined by: $w(a) = 1$,
   $w(b) = 1$, $w(c) = 2$. There are two elements of $S$ with weight 1 and one
@@ -582,7 +582,8 @@ make the following distinction:
 * If $S$ is infinite, then $\Phi_S(s)$ is a formal power series (given that
   the coefficients $a_k$ are finite)
 
-At this point, we introduce the concept of formal power series.
+At this point, we introduce the concept of formal power series through which
+we shall obtain tools to deal with generating series.
 
 #### Formal Power Series
 
@@ -604,16 +605,16 @@ performed with formal power series.
 Consider two formal power series $A(x) = \sum_{i=0}^\infty a_i x^i$ and
 $B(x) = \sum_{i=0}^\infty b_i x^i$.
 
-__Equality__: $((A(x) = B(x)) \iff (\forall k \in \mathbb{N} (a_k = b_k)))$.
+__EQUALITY__: $((A(x) = B(x)) \iff (\forall k \in \mathbb{N} (a_k = b_k)))$.
 This states that two formal power series are considered to be equal if and only
 if the coefficients $a_k$ and $b_k$ are the same for all natural number $k$.
 
-__Addition__: $A(x) + B(x) = \sum_{k=0}^\infty (a_k+b_k)x^k$. This is a valid
+__ADDITION__: $A(x) + B(x) = \sum_{k=0}^\infty (a_k+b_k)x^k$. This is a valid
 definition for addition since the resulting series is also a f.p.s- the
 coefficients $(a_k+b_k)$ are all finite rational numbers (by the declaration
 that $A$ and $B$ are formal power series above).
 
-__Multiplication__: Defined as follows:
+__MULTIPLICATION__: Defined as follows:
 
 $\begin{aligned}
   A(x)B(x) &= \sum_{j=0}^\infty \sum_{k=0}^\infty a_jb_k x^{j+k}\\
@@ -629,3 +630,419 @@ compute $[x^n]A(x)B(x)$.
 
 We know, from the binomial theorem that $A(x) = \sum_{j=0}^m \binom{m}{j}x^j$.
 So $[x^n]A(x) = \binom{m}{j}$.
+It is also clear from the summand of $B(x)$ that $[x^n]B(x)=2^n$. Putting these
+two together:
+
+$\begin{aligned}
+  [x^n]A(x)B(x) &= \sum_{i=0}^n [x^i]A(x)[x^{n-i}]B(x) \\
+  &= \sum_{i=0}^n \binom{m}{i}2^{n-i} \\
+  &= 2^n \sum_{i=0}^n \binom{m}{i}2^{-i} \\
+\end{aligned}$
+
+Now, notice what happens when $n>m$- the term $\binom{m}{i}$ will be zero for values
+of $i>m$ sum would effiectively run from 1 to $m$.
+
+$\begin{aligned}
+  2^n\sum_{i=0}^m \binom{m}{i} 2^{-i}
+    &= 2^n\sum_{i=0}^m \binom{m}{i} \left(\frac{1}{2}\right)^i\\
+    &= 2^n \left( 1+\frac{1}{2} \right)^m\\
+    &= 2^{n-m}3^m
+\end{aligned}$
+
+So we have that $[x^n]A(x)B(x)=2^{n-m}3^m$.
+
+__Example (Multiplicative Shift)__: This example illustrates how for all $k,n\geq 0$,
+the term $[x^n]x^k A(x)$, is similar to a shift in indices. Let
+$A(x)=\sum_{j\geq 0}a_j x^j$.
+
+$\begin{aligned}
+  [x^n] x^k A(x) &= [x^n] x^k \left( \sum_{j\geq 0} a_j x^j \right)\\
+  &= [x^n] \sum_{j= 0}^\infty a_j x^{j+k} \;\text{, let }l = k + j\\
+  &= [x^n] \sum_{l=k}^\infty a_{l-k} x^l\\
+  &= \begin{cases}
+    a_{n-k} &\;\text{, if }n-k\geq 0\\
+    0 &\;\text{, if }n-k <0
+  \end{cases}
+\end{aligned}$
+
+This is a rule/identity that will be used time and time again.
+
+__Definition (Formal Power Series Inverses)__: Let $A(x),B(x)$ be formal power
+series satisfying $A(x)B(x)=1$, then one says that $B(x)$ is the inverse of
+$A(x)$ and writes $B(x)=A(x)^{-1}$ or $B(x)=\frac{1}{A(x)}$.
+
+__Example__: Let $A(x)=1-x$, $B(x)=\sum_{i=\geq 0} x^k$.
+
+We can write $A(x)$, using the binomial theorem, as
+$A(x)=(1-x)^1=\sum_{k=0}^1 \binom{1}{k} (-x)^k$. Using this, it can be seen that
+$[x^n]A(x) = (-1)^n\binom{1}{n}$ and this forms the sequence
+$(1,-1,0,0,0,\dots)$.
+
+Now, using the multiplication rule:
+
+$\begin{aligned}
+  a_n = [x^n]A(x)B(x) &= \sum_{j = 0}^n [x^j]A(x) [x^{n-j}]B(x)\\
+  &= \sum_{j = 0}^n (-1)^j\binom{1}{j} (1)\\
+  &= \begin{cases}
+    0 &\text{ if }n\geq 0\\
+    1 &\text{ if }n=0
+  \end{cases}
+\end{aligned}$
+
+The only term with non-zero coefficent in $A(x)B(x)$ is the $x^0$ term (the
+constant term), which has coefficent 1. Therfore, we see that $A(x)B(x) =1$
+ans as such we can write $\sum_{i=0}^\infty x^i = \frac{1}{1-x}$, using the
+notation in the definiton of inverses in formal power series.
+
+__Theorem (Negative Binomial Series)__: As an extension of the example above,
+we have the following theorem: for all $k=1,2,3,\dots$ we have that
+
+$\begin{aligned}
+  \frac{1}{(1-x)^k} &= \sum_{n=0}^\infty \binom{n+k-1}{k-1} x^n
+\end{aligned}$
+
+_Proof_: The proof of this theorem is provided using induction on $k$.
+
+In the base case when $k=1$, we check:
+
+$\begin{aligned}
+  [x^n]\frac{1}{(1-x)^1} &= [x^n]\sum_{j=0}^\infty \binom{j+1-1}{1-1} x^j\\
+  [x^n]\frac{1}{1-x} &= [x^n]\sum_{j=0}^\infty \binom{j}{0} x^j\\
+  [x^n]\sum_{i=0}^\infty x^i &= [x^n]\sum_{j=0}^\infty x^j\\
+  1 &= 1
+\end{aligned}$
+
+The base case holds. Now, onto the inductive step where it is assumed that
+the theorem holds for some $k$. Now, to show that it holds for $k+1$.
+
+$\begin{aligned}
+  \frac{1}{(1-x)^{k+1}} &= \frac{1}{(1-x)^k} \frac{1}{(1-x)}\\
+  &= \left( \sum_{n=0}^\infty \binom{n+k-1}{k-1} x^n \right)\cdot
+  \left( \sum_{i=0}^\infty x^i \right)
+\end{aligned}$
+
+Now that we have $\frac{1}{(1-x)^{k+1}}$ expressed as a product of two power
+series, we can use the multiplication rule to compute the coefficient for the
+$x^n$ term.
+
+$\begin{aligned}
+  [x^n]\frac{1}{(1-x)^{k+1}}
+  &= [x^n]\left( \sum_{j=0}^\infty \binom{j+k-1}{k-1} x^j \right)\cdot
+  \left( \sum_{i=0}^\infty x^i \right)\\
+  &= \sum_{j=0}^n \binom{j+k-1}{k-1} \;\text{ by the Multiplication Rule}\\
+  &= \binom{n+k}{k} \;\text{ by the Hockey Stick Identity}
+\end{aligned}$
+
+The inductive step holds too and therefore so does the theorem for all
+$k=1,2,\dots$. This completes the proof. $\blacksquare$
+
+This theorem is also an important one and should be familiarized with as it
+can help with quick conversions to and from power series.
+
+__NOTE__: There are conditions under which formal power series have inverses.
+Here's an example highlighting a case when the f.p.s. has no inverse. Consider
+$A(x)=x$, which is claimed to have no inverse. Let us proove this.
+
+The proof provided here is by contradiction. Suppose $A(x)$ did have an inverse.
+Then, there would exist another f.p.s. $B(x)=\sum_{i\geq 0}b_i x^i$ such that
+$A(x)B(x)=xB(x)=1$. This looks like a good place to use the "Multiplicative
+shift" mentioned before to get:
+
+$\begin{aligned}
+  [x^n]A(x)B(x) &= [x^n]xB(x)\\
+  &= \begin{cases}
+    b_{n-1} &\;\text{ if }n\geq 0\\
+    0 &\;\text{ if }n=0
+  \end{cases}
+\end{aligned}$
+
+Note that if $B(x)$ is an inverse for $A(x)$, then $[x^0]A(x)B(x)=1$, but with
+the result above, we see that $[x^0]A(x)B(x)=0$, which is a contradiction.
+The starting assumption, that $A(x)$ has an inverse must have been wrong then.
+Therefore, $A(x)=x$ has no inverse.
+
+__Theorem (Condition for Inverses)__: An f.p.s. $A(x)$ has an inverse iff
+$[x^0]A(x)\neq 0$.
+
+_Proof_: \[Forwards\] First, assume that $[x^0]A(x)=a_n=0$. Now, we need to show
+that $A(x)$ has no inverse (This is proving the contrapositive which is
+logically equivalent).
+
+Say $B(x)$ is another f.p.s. with $[x^0]B(x)=b_0$.
+Let us check $[x^0]A(x)B(x) = a_0b_0 = 0$ since $a_0 = 0$. This means that
+$A(x)B(x)$ can never be equal to $1$, no matter the f.p.s. $B(x)$.
+Therefore, $A(x)$ has no inverse. This proves that if $A(x)$ has an inverse
+then $a_0\neq 0$.
+
+\[Backwards\] Now, suppose that $[x^0]A(x)\neq 0$. We need to show that $A(x)$
+has an inverse. To do this, we let $B(x)=\sum_{i\geq 0}b_i x^i$ and show that
+$A(x)B(x)=1$ has a single solution. We can equivalenty solve for:
+
+$\begin{aligned}
+  [x^n]A(x)B(x) &= \sum_{j=0}^n a_j b_{n-j}
+\end{aligned}$
+
+If $n=0$, then $[x^0]A(x)B(x) = a_0b_0$. Comparing this to the $[x^0]$
+coefficient on the Right Hand Side (RHS) of the equation $A(x)B(x)=1$, we get
+that $a_0b_0 = 1$, therefore $b_0 = \frac{1}{a_0}$. This is a valid quotient
+since $a_0$ is non-zero by assumption.
+
+If $n>0$, then $[x^n]A(x)B(x) = a_0b_n + \sum_{j=1}^n a_jb_{n-j}$. All
+coefficents on the RHS of the equation are zero (except the constant term) so
+we can solve for $b_n$ from above as
+$b_n = \frac{-1}{a_0}\sum_{j=1}^n a_jb_{n-j}$, which can be solved iteratively
+for some desidered value of $n$.
+This completes the proof. $\blacksquare$
+
+The kind of solution obtained for $b_n$ in the above theorem is called a
+__linear recurrence__ because $b_n$ is defined as a linear combination of
+previous $b_i$ terms (for $0\leq i < n$). We can use this in solving equations
+of formal power series using inverses. This is studied now.
+
+__Theorem__: Let $A(x)$ and $C(x)$ be f.p.s. If $[x^0]A(x)\neq 0$ the there is
+a formal power series $B(x)$ such that $A(x)B(x) = C(x)$.
+
+_Proof_: This short and simple proof builds off of the conditions for inverses.
+Since $[x^0]A(x) \neq 0$, we know that it has an invserse. Say the inverse of
+$A(x)$ is $B'(x)$ i.e. $A(x)B'(x)=1$. Now, let $B(x)=B'(x)C(x)$.
+This gives us that $A(x)B(x) = (A(x)B'(x))C(x) = C(x)$.
+This completes the proof. $\blacksquare$
+
+__Example__: Let $A(x) = \frac{5+x^2}{1-x}$. Compute $[x^n]A(x)$ for all
+$n\geq 0$. Note that in this example, if one considers $A(x)$ to be quotient of
+polynomials, the one in the denominator has degree lower than the polynomial in
+the numerator.
+
+First, start by writing $A(x) = \left(\frac{1}{1-x} \right)\left(5+x^2\right)$.
+Then:
+
+$\begin{aligned}
+  [x^n]A(x) &= [x^n]\left(\frac{1}{1-x} \right)\left(5+x^2\right)\\
+  &= \sum_{k=0}^n \left( [x^k] \frac{1}{1-x}\right)\left([x^{n-k}]5+x^2\right)\\
+  &= \sum_{k=0}^n [x^{n-k}]5+x^2\\
+  &= \begin{cases}
+    5 &\;\text{if }n\in\{0,1\}\\
+    6 &\;\text{if }n\geq 2
+  \end{cases}
+\end{aligned}$
+
+__Example__: Let $A(x) = \frac{2+7x-3x^2}{1-x^2+x^3}$. Note that in this
+example, if one considers $A(x)$ to be a quotient of polynomials the the
+polynomial in the denominator has higher degree than the one in the numerator.
+In this case, we derive a recurrence relationship which can be used to compute
+$[x^n]A(x)$ for all $n\geq 0$.
+
+Write $A(x) = \sum_{k\geq 0} a_k x^k$ so that $[x^n]A(x)=a_n$. Now, rewrite
+the original expression for $A(x)$ as $(1-x^2+x^3)A(x) = 2+7x-3x^2$.
+This process works by essentially comparing coefficients from the Left Hand
+Side (LHS) and RHS of the re-arranged expression for $A(x)$.
+
+Starting with the constant term. Since the LHS and RHS are equal, we have that
+$[x^0](1-x^2+x^3)A(x) = [x^0]2+7x-3x^2$. When the expressions for the
+coefficients are computed, we get that $a_0 = 2$.
+
+Next, the linear term: $[x^1](1-x^2+x^3)A(x) = [x^1]2+7x-3x^2$. Computing the
+expressions on each side of the equation, we get $a_1(1) - a_0(0) = 7$.
+We get $a_1 = 7$.
+
+Next, the quadratic term: $[x^2](1-x^2+x^3)A(x) = [x^2]2+7x-3x^2$. Computing
+the expressions on each side of the equation, we get $a_2+a_1(0)-a_0 = -3$.
+Evaluating using the previous computations, we get $a_2 = -1$.
+
+Now, we derive a general recurrence using $x^n$ term, where $n\geq 3$:
+$[x^n](1-x^2+x^3)A(x) = [x^n]2+7x-3x^2$. Evaluating each side gives
+$a_n - a_{n-2} + a_{n-3} = 0$. This gives us the expression for the general
+$a_n$ as $a_n = a_{n-2} - a_{n-3}$ for $n\geq 3$.
+
+The expression $a_n$ as $a_n = a_{n-2} - a_{n-3}$ for $n\geq 3$ is called a
+recurrence relation. But note that to compute $a_n$, one needs to know
+$a_{n-2}$ and $a_{n-3}$. Therefore, for the recurrence relation to be of any
+use, there must be a set of initial conditions provided. In this case, they
+were computed to be $a_0 = 2, a_1 = 7$ and $a_2 = -1$. From this, it is
+possible to compute any $a_n$ iteratively.
+
+_Notes_: We began to derive a general recurrence relation when we reached the
+cubic (or higher) term. This was because the $x^3$ term (and all after it)
+for the expression on the RHS have zero coefficient.
+
+Also note how the $a_0$ term is non-zero.
+
+Now, more generally, if there are f.p.s. $A(x)= \sum_{i\geq 0}a_i x^i$ with
+$a_0 \neq 0$ and $C(x) = \sum_{i\geq 0}c_i x^i$. By a theorem, we know that
+there exists a $B(x)$ such that $A(x)B(x)=C(x)$. We know that
+$B(x) = \frac{C(x)}{A'(x)}$, where $\frac{1}{A(x)}$ is the inverse of $A(x)$.
+We can now derive a general linear recurrence relation defining the
+coefficients of $B(x)$.
+
+__Theorem__: Let $A(x),C(x)$ be formal power series with $a_0 \neq 0$. Let
+$B(x)=\frac{C(x)}{A(x)}$. Then, $b_n = [x^n]B(x)$ is determined by the linear
+recurrence:
+
+$b_n = \frac{1}{a_0}\left( c_n - \sum_{j=0}^{n-1} a_{n-j}b_j \right)$
+
+_Proof_: Again this proof is short and straight-forward: To prove the
+recurrence, we start by comparing coefficients of the LHS and RHS i.e.
+checking $[x^n] A(x)B(x) = [x^n]C(x)$. We get:
+
+$\begin{aligned}
+  c_n &= \sum_{j=0}^n a_j b_{n-j}\\
+  c_n &= \sum_{j=0}^n a_{n-j} b_{j}\\
+  c_n &= a_0b_n + \sum_{j=0}^{n-1} a_{n-j} b_{j}\\
+\end{aligned}$
+
+Rearranging the last equation reveals the desired recurrence:
+
+$b_n = \frac{1}{a_0}\left( c_n - \sum_{j=0}^{n-1} a_{n-j}b_j \right)$
+
+__COMPOSITION__: This is yet another operation defined on formal power series.
+Let $A(x) = \sum_{j\geq 0}a_j x^j$ and $B(x) = \sum_{j\geq 0}b_j x^j$ be formal
+power series. If $b_0=$ then we define:
+
+$\begin{aligned}
+  A(B(x)) &= \sum_{j\geq 0} a_j B(x)^j
+\end{aligned}$
+
+In order to verify that composition of formal series is well defined, we check
+that the result of composing $A(x),B(x)$ as defined above is a formal power
+series too.
+
+$\begin{aligned}
+   [x^n]A(B(x)) &= \sum_{j\geq 0} a_j [x^n]B(x)^j
+\end{aligned}$
+
+At this stage, note that the logic from multiplicative shift can be applied
+here to the term $[x^n]B(x)^j = [x^n](b_1x+b_2x^2+\dots)^j$. If $j>n$, then
+there are no terms with $x^n$ left (all terms have exponent $x^n$ or higher).
+Therefore, the sum can be reduced to run from $0$ to $n$ instead.
+
+$\begin{aligned}
+   [x^n]A(B(x)) &= \sum_{j= 0}^n a_j [x^n]B(x)^j\\
+   &< \infty
+\end{aligned}$
+
+The coefficient in finite because $a_j$ and $[x^n]B(x)^j$ are all rational and
+there is a finite count of summands. Therefore, $A(B(x))$ is a formal power
+series and the operation of composition is well defined.
+
+_Note_: Here is an example when the condition that $b_0=0$ is necessary.
+Consider the composition of $A(x)=\sum_{i\geq 0}x^i$ and $B(x)=1$. Then, we get
+that $A(B(x))=\sum_{j\geq 0} 1 \rightarrow \infty$. It can cause such problems.
+
+Now, we shall look at using composition of formal power series to compute
+inverses.
+
+__Theorem__: Let $A(x),B(x)$ be formal power series such that $[x^0]A(x)\neq 0$
+and $[x^0]B(x)=0$. Then:
+
+$\begin{aligned} [A(B(x))]^{-1} = A^{-1}(B(x)) \end{aligned}$
+
+_Proof_: Write $A(x)=\sum_{i\geq 0}a_i x^i$. Since $a_0=0$, we know that $A(x)$
+has an inverse. Let $A^{-1}(x)=\sum_{i\geq 0}\alpha_i x^i$. Since $[x^0]B(x)=0$
+we know that it can be composed into other formal power series namely $A(x)$
+and $A^{-1}(x)$. Let us now consider the product of $A(x)$ and $A^{-1}(x)$,
+when composed with $B(x)$:
+
+$\begin{aligned}
+  A(B(x))A^{-1}(B(x)) &= \left( \sum_{j\geq 0}a_j[B(x)]^j \right)
+  \left( \sum_{j\geq 0}\alpha_j[B(x)]^j \right)\\
+  &= AA^{-1}(B(x)) \;\text{by the Multiplicative Rule}\\
+  &= 1
+\end{aligned}$
+
+This shows us that $A(B(x))$ is the invserse of $A^{-1}(B(x))$ since their
+product is 1. Therefore, we get the desired result. $\blacksquare$
+
+__Example__: Computing $[x^n](1+3x)^{-2}(1-x)^{-1}$. The key idea here is to
+first express the term $(1+3x)^{-2}$ as a composition of formal power series,
+then use the theorem above.
+
+Let $A(x)=-3x$. So we get that $(1+3x)^{-2}=(1-A(x))^{-2}$. This is good
+because the negative binomial series can be used to obtain a series
+representation.
+
+$\begin{aligned}
+  \frac{1}{(1+3x)^{2}} &=  \frac{1}{(1-A(X))^{2}}\\
+  &= \sum_{n\geq 0} \binom{n+1}{1} (A(x))^n \;\text{ by the Negative Binomial Series}\\
+  &= \sum_{n\geq 0} (n+1)(-3x)^n\\
+  &= \sum_{n\geq 0} (-3)^n(n+1)x^n
+\end{aligned}$
+
+This shows us that $[x^n](1+3x)^{-2} = (-3)^n(n+1)$.
+
+$\begin{aligned}
+  [x^n] (1+3x)^{-2} (1-x)^{-1} &= \sum_{j=0}^n [x^j](1+3x)^{-2} [x^{n-j}](1-x)^{-1}\\
+  &= \sum_{j=0}^n [x^j](1+3x)^{-2}\\
+  &= \sum_{j=0}^n (-3)^j(j+1)
+\end{aligned}$
+
+We now have a suite of tools related to formal power series which we shall
+employ in our study of generating series- to which we return now...
+
+#### ... Back to Generating Series
+
+Now, we study some additional properties of generating series.
+
+__Sum Lemma__ Let $S=A\cup B$ where $A\cap B = \emptyset$.
+Let $w:S\mapsto\{0,1,\dots\}$. Then
+
+$\Phi_S(x)=\Phi_A(x)+\Phi_B(x)$
+
+_Proof_:
+
+$\begin{aligned}
+  \Phi_S(x) &= \sum_{\delta\in S} x^{w(\delta)}\\
+  &= \sum_{\delta\in A}x^{w(\delta)} + \sum_{\delta\in B}x^{w(\delta)}\\
+  &= \Phi_A(x) + \Phi_B(x)\\
+  \blacksquare
+\end{aligned}$
+$
+
+The sum lemma for generating series can be generalised to:
+
+__Generalization of Sum Lemma__: Let $S=A_1\cup A_2\cup \dots A_n$ where
+$A_i\cap A_j = \emptyset$ for $1\leq i\neq j\leq n$. Also let
+$w:S\mapsto \{0,1,2,\dots\}$. Then
+
+$\Phi_S(x) = \sum_{i=0}^n \Phi_{A_i}(x)$
+
+_Proof_: This is proven by induction on $n$. The base case is trivial.
+Assume, inductively that the generalization is true for some $n$. Now we have
+to show that it holds for $n+1$. So we have
+$S=A_1\cup A_2\cup \dots A_n\cup A_{n+1}$ and where $A_i\cap A_j = \emptyset$
+for all $1\leq i\neq j \leq n+1$.
+
+$\begin{aligned}
+  S &= A_1\cup A_2\cup \dots A_n\cup A_{n+1}\\
+  &= (A_1\cup A_2\cup \dots A_n)\cup A_{n+1}
+\end{aligned}$
+
+Since $S$ is a disjoint union of $(A_1\cup A_2\cup \dots A_n)$ and $A_{n+1}$,
+we can use the sum lemma:
+
+$\begin{aligned}
+  \Phi_S(x) &= \Phi_{(A_1\cup A_2\cup \dots A_n)}(x) + \Phi_{A_{n+1}}(x)\\
+  &= \sum_{i=0}^n \Phi_{A_i}(x) + \Phi_{A_{n+1}}(x) \;\text{by Inductive Hypothesis for case }n\\
+  &=  \sum_{i=0}^{n+1} \Phi_{A_i}(x)\\
+  \blacksquare
+\end{aligned}$
+
+__Product Lemma__: Let $A,B$ be sets with weight functions
+$\alpha:A\mapsto \{0,1,2,\dots\}$ and $\beta:B\mapsto\{0,1,2,\dots\}$
+respectively. Define a weight function $w:A\times B\mapsto \{0,1,2,\dots\}$ by:
+
+$w((a,b))=\alpha(a) + \beta(b)$ for all $(a,b)\in A\times B$
+
+Then:
+
+$\Phi_{A\times B}(x) = \Phi_{A}(x)\Phi_B(x)$
+
+_Proof_:
+
+$\begin{aligned}
+  \Phi_{A\times B} &= \sum_{\delta=(a,b)\in A\times B} x^{w((a,b))}\\
+  &= \sum_{\delta\in A\times B} x^{\alpha(a)+\beta(b)}\\
+  &= \sum_{a\in A}\sum_{b\in B} x^{\alpha(a)+\beta(b)}\\
+  &= \left( \sum_{a\in A}x^{\alpha(a)} \right)\cdot \left( \sum_{b\in B}x^{\beta(b)} \right)\\
+  &= \Phi_A(x)\Phi_B(x)\\
+  \blacksquare
+\end{aligned}$
