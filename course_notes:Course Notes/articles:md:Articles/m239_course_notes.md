@@ -1,4 +1,4 @@
-# Intro to Combinatorics Course Notes
+# Intro to Combinatorics
 
 Navaz Alani
 _Spring 2020_
@@ -429,3 +429,203 @@ in the passage above. To prove that $f^{-1}$ is an inverse:
 
 This completes the proof of the backwards direction and finally proves the
 theorem above.
+
+### Generating Series
+
+__Context__: Let $S$ be a set. We define a "weight" function as a function
+$w:S\mapsto \{0,1,2,3,\dots\}$.
+
+_Question_: How many $\delta \in S$ such that $w(\delta) = k$?
+
+__Examples__
+
+1. With $S=\{a,b,c\}$ and $w:S\mapsto \{0,1,2,3,\dots\}$ defined by: $w(a) = 1$,
+  $w(b) = 1$, $w(c) = 2$. There are two elements of $S$ with weight 1 and one
+  element with weight $2$. This is the kind of information that we wish to
+  capture.
+2. If $S=\{\Omega\subseteq \{0,1,2,\dots, n\}| w(\Omega) = |\Omega|\}$ ($S$ is the
+  set of subsets of $\{1,2,\dots,n\}$ with the weight of a subset being defined
+  as the size of the subset). The number of elements with weight $k$ is easily
+  obtained (from our previous work with $S_{k,n}$) as $\binom{n}{k}$.
+
+__Definition__: A __generating function__ for a set $S$ with respect to a
+weight function $w:S\mapsto \{0,1,2,\dots\}$ encodes information regarding the
+counts of elements in $S$ with the weights $\{0,1,2,\dots\}$. It is denoted by
+$\Phi_{S}(x)$ and is defined as
+
+$\Phi_{S}(x) = \sum_{\delta \in S} x^{w(\delta)}$
+
+When one stares at this definition long enough, one realises that it is a way
+of keeping track of the set of weights that occur in $S$, with respect to the
+weight function $w$.
+
+We can manipulate the above definition to make this clearer:
+
+$\begin{aligned}
+  \Phi_{S}(x) &= \sum_{\delta \in S} x^{w(\delta)}\\
+  &= \sum_{k\geq 0}\left( \sum_{(\delta \in S) \land (w(\delta) = k)} \right) x^k\\
+  &= \sum_{k\geq 0} a_k x^k
+\end{aligned}$
+
+Where $a_k = |\{\delta \in S | w(\delta) = k\}|$.
+
+The coefficient of the $x^n$ term tells us the number of elements in the set
+$S$ which have the weight $n$ (of course, with respect to the weight function
+that was used to compute the series).
+
+__Examples__:
+
+1. What is the generating series of the corresponding example 1 above?
+  We compute: $\Phi_S(x) = x^{w(a)} + x^{w(b)} + x^{w(c)} = x^1+x^1+x^2 =
+  2x + x^2$. Note how even if the weight function were defined differently
+  (like $w(a) = w(c) = 1$ and $w(b) = 2$). The resulting generating series
+  is the same. What this means is that there is information about the weights
+  of elements of $S$ that is not preserved.
+2. For corresponding example 2 above, we have the generating function
+
+  $\begin{aligned}
+    \Phi_S(x) &= \sum_{k\geq 0} |\{\Omega \in S | w(\Omega) = k\}|\cdot x^k\\
+    &= \sum_{k\geq 0} \binom{n}{k}x^k\\
+    &= \sum_{k=0}^n \binom{n}{k} x^k\\
+    &= (1+x)^n
+  \end{aligned}$
+
+This may all be nice, but what is the point of encoding this information in a
+generating series?
+
+__Theorem__: Suppose that $S$ is a finite set with the weight funtion
+$w:S \mapsto \{0,1,2,\dots\}$. Let $\Phi_S$ be the generating series for $S$
+with respect to $w$. Then:
+
+1. $|S| = \Phi_S(1)$. This says that the size of the set $S$ is equal to its
+   generating series evaluated at $x=1$.
+2. $\sum_{\delta \in S} w(\delta) = \left.\frac{d\Phi_s}{dx}\right|_{x=1}$.
+   This says that the sum of the weights of the elements in $S$ is exactly
+   equal to the first derivative of the generating series, evaluated at $x=1$.
+
+Let's see why this works:
+
+__Proof__:
+
+1. Here is a short proof for statement 1 above
+
+  $\begin{aligned}
+    \Phi_S(1) &= \left.\sum_{\delta \in S} x^{w(\delta)}\right|_{x=1}\\
+    &= \sum_{\delta\in S} 1^{w(\delta)} = \sum_{\delta \in S} 1 \\
+    &= |S|
+  \end{aligned}$
+2. Similarly, here is a short proof for statement 2
+
+  $\begin{aligned}
+    \left.\frac{d\Phi_S}{dx}\right|_{x=1} &= \left.\sum_{\delta \in S}
+    w(\delta) x^{w(\delta) - 1}\right|_{x=1}\\
+    &= \sum_{\delta \in S} w(\delta) 1^{w(\delta) - 1}\\
+    &= \sum_{\delta \in S} w(\delta)\\
+  \end{aligned}$
+
+__Example__: Consider a sequence of $n$ coin flips and suppose you win $1 with
+each time that you get heads after tails or tails after heads. Compute the
+expected winnings using generating series.
+
+The above theorem allows us to get the sum of the weights of the elements in
+$S$ as the number of elements. Putting these together, we can get the average
+weight of an element in $S$. Contextualizing to this example, we can benefit by
+defining a weight function in terms of the rewards and then compute the average
+as explained to get the expected winnings. Take a moment to contemplate how
+you would solve this before moving on...
+
+We need to get a 'mathematical handle' on the occurrence of tails after heads
+and heads after tails. So, for a sequence of $n$ coin flips, we can concoct
+$n-1$ binary variables indicating whether the next flip in the sequence differs
+from the current one:
+
+$\forall i\in [1,n-1]$ define $z_i = \left\{\begin{array}{lr}
+        1, & \text{if }(i+1)\text{th outcome is different from }i\text{th}\\
+        0, & \text{otherwise}
+        \end{array}\right.$
+
+Using this string of binary variables $z_1,z_2,\dots,z_{n-1}$, one can derive
+useful information about the sequence of $n$ coin flips. We can put this all in
+a set $S=\{(z_1, z_2, \dots z_{n-1}) | z_j\in \{0,1\}\}$ with the weight
+function defined by $w((z_1,\dots,z_{n-1})) = \sum_{i=1}^{n-1} z_i$.
+
+We can now view $S = \{0,1\}^{n-1}$ and the weight function is essentially
+computing the number of ones in an entry from $S$- each of which corresponds
+to a dollar reward (as per the rules of the game). Then we can compute
+$\Phi_S(x) = \sum_{i\geq 0} a_i x^{i}$, where $a_i$ is the number of elements
+in $S$ which have weight $i$. Fortunatly, we have alredy done this (see work on
+$A_{k,n}$)- we know that $a_i = \binom{n-1}{i}$. Therefore, we finally get
+$\Phi_S(x) = (1+x)^{n-1}$, by the binomial theorem.
+
+Now, we use the theorem above:
+
+$|S| = \Phi_S(1) = 2^{n-1}$
+
+$\begin{aligned}
+  \sum_{\delta \in S} w(\delta) &= \left.\frac{d\Phi_S}{dx}\right|_{x=1}\\
+  &= \left.(n-1)(1+x)^{n-2}\right|_{x=1}\\
+  &= (n-1)2^{n-2}
+\end{aligned}$
+
+We can readily compute the expected winnings now:
+
+$\begin{aligned}
+  \text{Expected winnings} &= \frac{\left.\frac{d\Phi_S}{dx}\right|_{x=1}}{|S|}\\
+  &= \frac{(n-1)2^{n-2}}{2^{n-1}}\\
+\end{aligned}$
+
+So far, we have only been considering the cases in which the set $S$ is finite.
+What happens to $\Phi_S$ when $S$ is an infinite set? In this case, we have to
+make the following distinction:
+
+* If $S$ is finite, then $\Phi_S(x)$ is a polynomial
+* If $S$ is infinite, then $\Phi_S(s)$ is a formal power series (given that
+  the coefficients $a_k$ are finite)
+
+At this point, we introduce the concept of formal power series.
+
+#### Formal Power Series
+
+A formal power series is an expression $c_0 + c_1x^1 + c_2x^2 + \dots$ where
+$(c_0, c_1, c_2, \dots)$ is a sequence of rational numbers (for our intents
+and purposes, the coefficients are rational numbers, but the important part is
+that they are finite). This is to concretize the notion of a generating series
+as a formal power series, and to then to apply the properties of formal power
+series in the realm of generating series.
+
+Let $C(x)$ be a formal power series (to be abbreviated as f.p.s). We can write
+$C(x) = \sum_{i=0}^\infty c_i x^i$ and define $[x^n] = c_n$. So if
+$C(x) = \sum_{i=0}^\infty 2^i x^i$, then $[x^0]C(x) = 1$, $[x^1]C(x) = 2$,
+$[x^2]C(x) = 4$ and so on. Let us now consider the operations which can be
+performed with formal power series.
+
+##### Operations on Formal Power Series
+
+Consider two formal power series $A(x) = \sum_{i=0}^\infty a_i x^i$ and
+$B(x) = \sum_{i=0}^\infty b_i x^i$.
+
+__Equality__: $((A(x) = B(x)) \iff (\forall k \in \mathbb{N} (a_k = b_k)))$.
+This states that two formal power series are considered to be equal if and only
+if the coefficients $a_k$ and $b_k$ are the same for all natural number $k$.
+
+__Addition__: $A(x) + B(x) = \sum_{k=0}^\infty (a_k+b_k)x^k$. This is a valid
+definition for addition since the resulting series is also a f.p.s- the
+coefficients $(a_k+b_k)$ are all finite rational numbers (by the declaration
+that $A$ and $B$ are formal power series above).
+
+__Multiplication__: Defined as follows:
+
+$\begin{aligned}
+  A(x)B(x) &= \sum_{j=0}^\infty \sum_{k=0}^\infty a_jb_k x^{j+k}\\
+  &= \sum_{n=0}^\infty \left( \sum_{j=0}^n a_j b_{n-j} \right)x^n\\
+\end{aligned}$
+
+Note that we can identify the term $[x^n]A(x)B(x) = \sum_{j=0}^n a_j b_{n-j}$
+from the last expression above. This term is also a rational number since it
+is a finite sum of product of pairs of rational numbers.
+
+_Example_: Let $A(x) = (1+x)^m$ and $B(x) = \sum_{k=0}^m 2^k x^k$. Let us
+compute $[x^n]A(x)B(x)$.
+
+We know, from the binomial theorem that $A(x) = \sum_{j=0}^m \binom{m}{j}x^j$.
+So $[x^n]A(x) = \binom{m}{j}$.
