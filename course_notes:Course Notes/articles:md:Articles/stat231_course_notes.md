@@ -1,4 +1,4 @@
-# Statistics Course Notes
+# Statistics
 
 Navaz Alani
 _Spring 2020_
@@ -78,14 +78,14 @@ types of variates:
   collected without any attempt to change one or more of the variates for the
   sampled units. These kinds of studies involve some sort of measurement.
 
-  * Example: In a study on the drinking habits of univeristy students, blood
+   * Example: In a study on the drinking habits of univeristy students, blood
     alcohol levels were measured from blood samples taken from students at the
     beginning of an 8:30 AM Monday lecture.
 
 3. __Experimental studies__: This is when the experimenters intervene and
   change/set the value of the variates for the units in the study.
 
-  * Example: We continue the example from the observational study. Now suppose
+   * Example: We continue the example from the observational study. Now suppose
     the blood samples are taken similarly from two classes. In one class,
     the experimenters warned/informed the class in advance of the blood samples
     to be taken to measure alcohol levels. This intervention now qualifies this
@@ -209,33 +209,37 @@ Let $\{y_1,\dots, y_n\}$ be a dataset where $y_i$ is a real number.
 * __Interquartile Range (IQR)__: In order to define IQR, we need the following:
   
   __Percentiles and Quartiles__
-    
-    * The $p^{th}$ percentile of a dataset is the value such that $p\%$ of the
-      data fall at or below it.
-    * Formally, the $p_{th}$ quantile (a.k.a. $100p^{th}$ percentile) is a
-      value, $q(p)$, determined as follows:
 
-      - let $m=(n+1)p$ where $n$ is the sample size
-      - If $m\in\{1,2,\dots,n\}$, then take the $m^{th}$ smallest value:
-        $q(p) = y_{(m)}$, where $y_{(m)}$ is from the ordered statistic.
-      - If $m\notin\{1,2,\dots,n\}$ but $1<m<n$, then determine the closest
-        integer $j$ such that $j<m<j+1$ and set
-        $q(p)=\frac{1}{2}\left[y_{(j)} + y_{(j+1)}\right]$
+  * The $p^{th}$ percentile of a dataset is the value such that $p\%$ of the
+    data fall at or below it.
+  * Formally, the $p_{th}$ quantile (a.k.a. $100p^{th}$ percentile) is a
+    value, $q(p)$, determined as follows:
 
-    * There are 3 quartiles which are special enough to be given their own
-      names:
+    * let $m=(n+1)p$ where $n$ is the sample size
+    * If $m\in\{1,2,\dots,n\}$, then take the $m^{th}$ smallest value:
+      $q(p) = y_{(m)}$, where $y_{(m)}$ is from the ordered statistic.
+    * If $m\notin\{1,2,\dots,n\}$ but $1<m<n$, then determine the closest
+      integer $j$ such that $j<m<j+1$ and set
+      $q(p)=\frac{1}{2}\left[y_{(j)} + y_{(j+1)}\right]$
 
-      - __First/lower quartile__: $q(0.25)$ is the 25th percentile, or the
-        median of the observations below the median.
-      - __Median__: $q(0.50)$ is the 50th percentile
-      - __Third/upper quartile__: $q(0.75)$ is the 75th percentile, or the
-        median of the observations above the median.
-    
-    * Now, we are ready to define IQR.
+  * There are 3 quartiles which are special enough to be given their own
+    names:
+
+    * __First/lower quartile__: $q(0.25)$ is the 25th percentile, or the
+      median of the observations below the median.
+    * __Median__: $q(0.50)$ is the 50th percentile
+    * __Third/upper quartile__: $q(0.75)$ is the 75th percentile, or the
+      median of the observations above the median.
+
+  * Now, we are ready to define IQR.
 
   IQR is defined as $\text{IQR} = q(0.75) - q(0.25)$. It is more robust than
   sample variance since unlike range, it is not affected by extreme values or
   outliers in the dataset.
+
+  Together, the minium, lower quartile, median, upper quartile and maximum of
+  a data set form the __five number summary__ which can be used to get an idea
+  of the distribution of data in the data set.
 
 #### Measures of Shape
 
@@ -269,3 +273,181 @@ Let $\{y_1,\dots, y_n\}$ be a dataset where $y_i$ is a real number.
 
   Note that some statistical software actually subtract 3 from the kurtosis
   since 3 is what is expected for normal data.
+
+## Graphical Summaries for Univariate Data
+
+__Reminders__: When utilizing a graph to present data, one should consider the
+following:
+
+* Appropriate sizing for graphs
+* Concise self-explanatory titles
+* Axes should be labelled and units provided (if applicable)
+* Scales of the axes should be reasonable and suited to the data
+* Graphical presentations for data may not always be the best solution so
+  be sure that the usage is appropriate
+
+__Histograms__:
+
+The gist of histograms is to present data in a way that it can be compared
+to a probability density function (PDF -in the continuous case) and probability
+function (PF -in the discrete case).
+The comparison to a PDF/PF can be useful when determining which distribution
+works best for the data being presented.
+
+Suppose $\{y_1,y_2,\dots,y_n\}$ is an observed data set. In order to present
+this data using a histogram, it needs to be pre-processed as detailed here:
+
+* Obtain the minimum and maximum observations in the data set, say $m$ and $M$
+  respectively. Partition the interval $[m,M]$ into $k$ disjoint intervals
+  $I_j = [a_{j-1}, a_j]$ for where $a_j\in [m,M]$ for all $1\leq j\leq k$.
+* Let $f_j = |\{y_i | y_i\in I_j\}|$, for all $1\leq j\leq k$. In other words,
+  let $f_j$ be the number of observations from the data set that lie in the
+  interval $I_j$. These $f_j$ are called the __observed frequencies__.
+  Also, the __relative frequency__ of an interval is $f_j/n$.
+* Now, above each interval in the partition, draw a rectangle above it whose
+  height is proportional to the observed frequency for that interval.
+  This can also be done using the relative frequency instead.
+
+In a __standard__ histogram, the intervals are of equal width and the heights
+are equal to the observed/relative frequencies. In a __relative frequency__
+histogram, the intervals may not be of the same width. In such a histogram,
+the height of each rectangle is set to $\frac{f_j/n}{a_j - a_{j-1}}$ so that
+the rectangle's area is equal to $\frac{f_j}{n}$. Doing this ensures that the
+sum of the areas of all the rectangles is 1. This is important because to
+achieve the goal of comparing the presented data to a PDF, the histogram must
+be a relative frequency one.
+
+__Empirical Cummulative Distribution Functions (emprical CDF)__:
+
+Similar to a histogram, the gist of an empirical CDF is finding an object which
+presents the data, but can also be used for comparison with the CDF of a random
+variable, to determine how well it models the observations.
+
+It is a very simple object, really, which is used to answer the question:
+"What is the probability, if a random observation was picked from the dataset,
+that it would be less than or equal to some $y$"? This is the same question
+the CDF of a random variable answers.
+
+In the case of empircal observations, the empirical CDF, denoted $\hat{F}$, is
+defined, for all $y\in \mathbb{R}$ as:
+
+$\hat{F}(y) = \frac{|\{ y_i | y_i \leq y \}|}{n}$
+
+In other words, for every real number $y$, the empirical CDF evaluated at that
+value, gives the number of observations less than or equal to $y$, divided by
+the total number of observations.
+
+When plotted, $\hat{F}$ should look somewhat staircase like.
+
+__Box Plots__:
+
+A box plot is a method of data presentation which brings out the distribution
+of the data set. This is done through the use of the five number summary, with
+some slight modifications.
+
+* Draw a box where the bottom is against the lower quartile ($q(0.25)$) and
+  the top is against the upper quartile $q(0.75)$. One should deduce that the
+  height of box therefore is the IQR of the data set (one of the measures of
+  the spread of data).
+* Draw a horizontal line through the box, across the median.
+* From the bottom of the box, draw a line to the value
+  $q(0.25) - (1.5\cdot IQR)$.
+  From the top of the box, draw a line to the value
+  $q(0.75) + (1.5\cdot IQR)$.
+  This is done in order to account for outliers in the data set.
+* Finally, plot all additional observations beyond the "whiskers" of the plot
+  using symbols like '$+$' or '$*$'. These are called the __outliers__.
+
+Because of how they end up looking, box plots are also called _box and whisker_
+plot. They are great for comparing two data sets side by side.
+
+Here are some observations:
+
+* If the median line divides the box approximately into two, then the data is
+  roughly symmetrical
+* If the median line lies more towards the lower quartile, then half of the
+  data is contained in the interval from the lower whisker to the median.
+  This signifies that the data is positively skewed (with a right tail).
+  This can be applied vice versa.
+
+__Run Charts__:
+
+These are particularly useful when plotting a variate measured against time.
+It is simply a plot where the time is plotted on the
+$x$-axis and the value of the observation of the variate at that time is
+plotted on the $y$-axis. It allows one to see how the variate changes through
+time, but it does not really summarize the dataset.
+
+__Scatter Plots__:
+
+The data being summarized so far (of the form $\{y_1,\dots,y_n\}$) is what
+is called univariate- observations on a single variate of the sample.
+What if one measures 2 variates of interest from the sample, like so:
+$\{(x_1,y_1), (x_2, y_2), \dots, (x_n, y_n)\}$, where $x_i,y_i$ are real numbes
+for all $1\leq i \leq n$. This is called __bivariate data__.
+The $x_i$'s can be observations from one variate and the $y_i$'s are
+observations of the other variate of interest.
+
+One of the first approaches to presenting this data is through a scatter plot,
+which just plots the observations of the first variate against the observations
+of the other variate. So the observation $(x_i,y_i)$ is a point on the 2D
+Cartesian plane.
+
+From such a plot, one is able to see whether or not there are signs of a
+relationship between the two variates of interest. There is actually a
+numerical handle on such a relationship: the _sample correlation_.
+
+For bivariate data of the form $\{(x_1,y_1),\dots,(x_n,y_n)\}$, the sample
+correlation is defined through the sums of squares:
+
+$S_{xx} = \sum_{i=1}^n (x_i - \bar{x})^2 = \sum_{i=1}^n x_i^2 - n\bar{x}^2$
+
+$S_{xy} = \sum_{i=1}^n (x_i - \bar{x})(y_i -\bar{y}) = \sum_{i=1}^n x_i^2 - n\bar{x}\bar{y}$
+
+$S_{yy} = \sum_{i=1}^n (y_i - \bar{y})^2 = \sum_{i=1}^n y_i^2 - n\bar{y}^2$
+
+Notice that the first and last sums of squares are exactly the variances for
+$\{x_1,\dots,x_n\}$ and $\{y_1,\dots,y_n\}$ respectively.
+Together, these sums of squares are used to define the sample correlation, $r$
+
+$r = \frac{S_{xy}}{\sqrt{S_{xx}S_{yy}}}$
+
+__About the sample correlation__: It takes values between -1 and 1 and provides
+a measure for the linear relationship between the variates. If $r$ is close to
+1, the variates are said to have a strong linear relationship. Similarly, a
+value close to -1 implies a strong negative relationship between the two
+variates. Finally, $r$ close to 0 indicates that the variates have no
+relationship.
+
+__Bar Charts, Pie Charts__:
+
+When data needs to be presented categorically, pie and bar charts shine.
+
+A pie chart represents the relative frequency of the observations for a
+category using the area of a sector on a circle. Every category will have a
+sector in the circle, possibly even with an area of 0.
+
+Bar graphs work similarly to histograms, where the intervals are replaced
+with the categories.
+
+## Probability Distributions and Statistical Models
+
+Empirical studies collect data with the aim of gaining more knowledge and
+answering questions about the population/process. This is done through the
+use of a __statistical model__, which is essentially a mathematical model
+that incorporates probabilities. An over-view of the kinds of questions that
+statistical models aim to answer:
+
+* Questions that can be formulated in terms of the parameters of the model
+* Models work with random variables which provide a handle on the variation
+  of variates in a population
+* Drawing conclusions from statistical models involves some level of
+  uncertainty, which probability helps to quantify/understand.
+* Procedures for making decisions based on observed data can often be
+  formulated in terms of models
+* Models allow simulations of processes to be run by a computer (because it is
+  cheaper and less time consuming)
+
+We shall focus on using the numerical and graphical summaries of empirical data
+in order to choose a statistical model and work out estimates for any unknown
+parameters in the process.
