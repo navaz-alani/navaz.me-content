@@ -1354,3 +1354,312 @@ _Proof_: \[An exercise in structural induction\]
 For example, if we have that $A=(p\land\lnot q)\land(\lnot r\land s)$. The
 negation of $A$ by the above theorem is
 $\lnot A = (\lnot p\lor q)\lor (r\lor \lnot s)$.
+
+## Formula Simplification, Essential Laws and Normal Forms
+
+Here, we draw a similarity between simple algebraic manipulations and
+simplification of formulae in the propositional language. In algrebra, the
+expression $(a + b) - b$ is clearly yields $a$. But how do we know this? The
+rules that were followed to reach the deduction that the expression evaluated to
+$a$ were the associativity of addition, and how zero is defined i.e. $y-y=0$ and
+$x+0=x$. In essence, this helped us reach a simplified form of the expression,
+which can help to make it easier to understand and work with.
+
+Now, consider the following propositional formula $(p \land q) \land \lnot q$.
+When seeking a simplification of this formula, the process is very similar to
+the algebraic one above. The difference is that in this case, the algebraic
+rules are actually (tauto)logical equivalences. We use the following
+equivalences in order to simplify this logical formula:
+
+$\begin{aligned}
+  (A\land B) \land C &\models\!\mid A\land (B\land C) \\
+  A\land \lnot A &\models\!\mid 0 \\
+  A\land 0 &\models\!\mid 0
+\end{aligned}$
+
+Using these equivalences above, we can do the following:
+
+$\begin{aligned}
+(p\land q) \land\lnot q &\models\!\mid p\land (q\land \lnot q)\\
+  &\models\!\mid p\land 0 \\
+  &\models\!\mid 0
+\end{aligned}$
+
+### Simplification of Conditonals and Biconditionals
+
+Since the symbolic treatment of conditionals and biconditionals is relatively
+cumbersome, one usually "substitutes" them using logically equivalent formulae.
+In order to remove the conditional from a formula, one pay perform a
+substitution using the following equivalence:
+
+$p\rightarrow q \models\!\mid \lnot p \lor q$
+
+To get rid of the biconditional, one may use either of the following forms:
+
+$\begin{aligned}
+  p \iff q &\models\!\mid (p\land q)\lor (\lnot p\land \lnot q)\\
+  &\models\!\mid (p\rightarrow q) \land (q\rightarrow p) \\
+  &\models\!\mid (\lnot p\lor q) \land (p\lor \lnot q)
+\end{aligned}$
+
+__Example__:
+
+$\begin{aligned}
+  (p\rightarrow q\land r)\lor ((r\iff s) \land (q\lor s))
+  \models\!\mid (\lnot p \lor q\land r) \lor (
+  ((r\land s)\lor (\lnot q\land \lnot s)) \land (q\lor s))
+\end{aligned}$
+
+### Essential Laws of Propositional Calculus
+
+| Name              | Law                                                                                                                      |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Excluded Middle   | $p\lor \lnot p \models\!\mid 1$                                                                                          |
+| Contradiction Law | $p\land \lnot p \models\!\mid 0$                                                                                         |
+| Identity Laws     | $p\lor 0 \models\!\mid p$ and $p\land 1 \models\!\mid p$                                                                 |
+| Dominaiton Laws   | $p\lor 1\models\!\mid 1$ and $p\land 0 \models\!\mid 0$                                                                  |
+| Idempotent Laws   | $p\lor p\models\!\mid p$ and $p\land p\models\!\mid p$                                                                   |
+| Double-negation   | $\lnot(\lnot p) \models\!\mid p$                                                                                         |
+| Commutative Laws  | $p\land q\models\!\mid q\land p$ and $p\lor q\models\!\mid q\lor p$                                                      |
+| Associative Laws  | $(p\lor q)\lor r \models\!\mid p\lor (q\lor r)$ and $(p\land q)\land r \models\!\mid p\land(q\land r)$                   |
+| Distributive Laws | $p\land (q\lor r) \models\!\mid (p\land q)\lor (p\land r)$ and $p\lor (q\land r) \models\!\mid (p\lor q)\land (p\lor r)$ |
+| De Morgan's Laws  | $\lnot (p\land q)\models\!\mid \lnot p \lor \lnot q$ and $\lnot (p\lor q) \models\!\mid \lnot p \land \lnot r$           |
+
+* Note that all of these laws can be readily proven using a truth table
+* All laws come in pairs (except the double negation law). These pairs are
+  called dual pairs: for each formula depending only on the connectives
+  $\lnot, \land, \lor$, the dual is obtained by replacing each 1 by a 0 and each
+  0 by a 1, all $\land$ with $\lor$ and finally replace all $\lor$ with $\land$.
+* The laws help one simplify a formula and should therefore be applied whenever
+  they can. There is no point in leaving the formula $\lnot\lnot p\lor
+  (q\land\lnot q)$ as it is. It is better simplified as just $p$.
+* A __non-perfect__ analogy for the commutative, associative and distributive
+  laws is found in the algebraic operators $+,-$. The $\land$ is often treated
+  as $+$ and $\lor$ is often treated as $-$ (not always...).
+
+Here are two other laws which can be derived from the laws above. Firstly, here
+are the absorption laws:
+
+* $p\land (p\lor q) \models\!\mid p$
+* $p\lor (p\land q) \models\!\mid p$
+
+They can be proven using the identity, distributivity and domination laws:
+
+$\begin{aligned}
+  p\lor (p\land q) &\models\!\mid (p\land 1) \lor (p\land q) &\text{Identity}\\
+  &\models\!\mid p \land (1\lor q) &\text{Distributivity (in reverse)}\\
+  &\models\!\mid p \land 1 &\text{Domination}\\
+  &\models\!\mid p &\text{Identity}
+\end{aligned}$
+
+Here is another important law, with its dual:
+
+* $(p\land q)\lor (\lnot p\land q) \models\!\mid q$
+* $(p\lor q) \land (\lnot p \lor q) \models\!\mid q$
+
+These can be proven using distributivity in revserse, followed by the law of the
+excluded middle and finally the identity laws.
+
+#### Shortcuts for Simplifying Formulae
+
+__Definition__: A formula is called a literal if it is of the form $p$ or $\lnot
+p)$, where $p$ is a propositional variable.
+The two $p$ and $\lnot p$ are called _complementary literals_. The following
+rules allow one to simplify conjunctions only containing literals:
+
+* If a conjunction contains complementary literals or the propositional constant
+  0, then it always yields 0 i.e. it is a contradiction
+* All instances of the propositional constant 1 and the duplicate copies of any
+  literal may be dropped. If nothing remains, then the formula is a tautology -
+  you can keep just a 1 to have a formula.
+
+To simplify disjunctions, the duals of the two rules above are used.
+
+* If a disjunction contains complementary literals or the propositional constant
+  1, then it always yields 1 i.e. it is a tautology
+* All instances of the propositional constant 0 and all duplicate copies of any
+  literal may be dropped. If nothing remains, then the formula is a
+  contradiction- you can keep just a 0 to have a formula.
+
+__Example__: Simplifying
+$(p_3\land \lnot p_2 \land p_3 \land \lnot p_1)\lor (p_1\land p_3 \land\lnot p_1)$
+
+Using the rules above, this expression can be simplified to:
+$p_3\land \lnot p_2 \land \lnot p_1$
+
+### Normal Forms
+
+Just like matrices, formulae can be converted into some standard froms through
+which they can become more convenient for symbolic manipulations and
+identification and comparision of formulae. In propositional calculus, there are
+two such forms: the __Disjunctive Normal Form__ and the __Conjunctive Normal
+Form__.
+
+__Definition__: A formula is said to be in disjunctive normal form (DNF) if it
+is written as a disjunction, in which all the terms are conjunctions of
+literals.
+
+__Example__: The formulae $(p\land q)\lor (p\land \lnot q)$, $p\lor (q\land r)$
+and $\lnot p \lor t$ are all in DNF.
+
+The disjunction $\lnot (p\land q) \lor r$ is NOT in DNF. This is because the
+term $\lnot (p\land q)$ is a negation, not a conjunction.
+
+__Definition__: A disjunction with literals as disjuncts is called a disjunctive
+clause. Similarly, a conjunction with literals as conjuncts is called a
+conjunctive clause.
+
+__Examples__: $(p\land q\land \lnot r)$ is a conjunctive clause and
+$(p\lor q\lor \lnot r)$ is called a disjunctive clause,
+
+In general, disjunctive and conjunctive clauses are just called clauses,
+
+__Definition__: A conjunction with disjunctive clauses as its conjuncts is said
+to be in conjunctive normal form.
+
+__Examples__: Each of $p\land (q\lor r)$, $p\land q$ and $p\land \lnot q$ is in
+CNF. However, the formula $p\land (r\lor (p\land q))$ is NOT in CNF- the term
+$p\land q$ in the second argumet of the first conjunction is a conjunction, not
+a literal, therefore it is not a disjunctive clause.
+
+### Obtaing Normal Forms
+
+How does one compute the normal form of a formula? The following tautological
+equivalences can be used to this end.
+
+These help to get rid of implications and equivalences from formulae.
+
+* $A\rightarrow B \models\!\mid \lnot A\lor B$ 
+* $A\iff B \models\!\mid (\lnot A \lor B)\land (A\lor \lnot B)$
+* $A\iff B \models\!\mid (A\land B)\lor (\lnot A \land \lnot B)$
+
+These equivalences help to eliminate $\lnot, \land, \lor$ from the scope of
+$\lnot$ such that every $\lnot$ only has an atom in its scope.
+
+* $\lnot\lnot A \models\!\mid A$
+* $\lnot (A_1\land\dots\land A_n) \models\!\mid \lnot A_1\lor\dots\lor\lnot A_n$
+* $\lnot (A_1\lor\dots\lor A_n) \models\!\mid \lnot A_1\land\dots\land\lnot A_n$
+
+These equivalences help eliminate $\lor$ from the scope of $\land$.
+
+* $A\land (B_1\lor\dots\lor B_2) \models\!\mid (A\land B_1)\lor\dots\lor(A\land
+  B_n)$
+* $(B_1\lor\dots\lor B_n)\land A \models\!\mid (B_1\land
+  A)\lor\dots\lor(B_n\land A)$
+
+These last equivalences help eliminate $\land$ from the scope of $\lor$.
+
+* $A\lor (B_1\land\dots\land B_n) \models\!\mid (A\lor B_1)\land\dots\land
+  (A\lor B_n)$
+* $(B_1\land\dots\land B_n)\lor A \models\!\mid (B_1\lor A)\land\dots\land
+  (B_n\land A)$
+
+This method will lead to the DNF/CNF of a formula.
+
+__Notes__: The two nomrmal forms that have been discussed thus far are not
+mutually exclusive i.e. a formula in CNF can also be a valid formula in DNF.
+Have a look at the formula $\lnot p\land q \land \lnot r$, which is a
+conjunction with 3 literals. It is in CNF, with three disjunctive clauses.
+Alternatively, it is also in DNF, with one conjunctive clause.
+
+On the other hand, the formula $\lnot p \lor (q\land \lnot r)$ is in DNF, with
+two conjunctive clauses, but it cannot be considerd to be a formula in CNF at
+all. But if $\lor$ is exchanged for $\land$ in this formula, it is a valid
+formula in CNF too, just like the example above.
+
+#### Algorithm for CNF
+
+* Eliminate equivalences and implications using $A\rightarrow B \models\!\mid
+  \lnot A \lor B$ and $A\iff B \models\!\mid (\lnot A \lor B)\land (A\lor \lnot
+  B)$
+* Push negation inwards, to the variables using De Morgan's Laws
+* Recursively: $CNF(A)$
+    * If $A$ is a literal, then return $A$
+    * If $A$ is $B\land C$, then return $CNF(B)\land CNF(C)$
+    * If $A$ is $B\lor C$,
+      * call $CNF(B)$ and $CNF(C)$
+      * Suppose $CNF(B) = B_1\land\dots\land B_n$
+      * Suppose $CNF(C) = C_1\land\dots\land C_m$
+      * Return $\land_{i=1,\dots,n\;\text{ and }\;j=1,\dots,m}(B_i\lor C_j)$
+        i.e. the conjunction of $B_i\land C_j$, for all pairs of $i,j$.
+
+__Example__: Consider the formula
+$((a\lor b)\land (c\lor \lnot a\lor d))\lor ((\lnot a)\land (c\lor d)\land
+(\lnot b \lor \lnot c \lor \lnot d))$. Using the recursive algorithm for CNF in
+the last step above, we can expand and simplify into the DNF:
+$(a\lor b\lor c\lor d) \land (\lnot a\lor c\lor d)$
+
+__Theorem (Existance of Normal Forms)__: Any formula $A\in Form(L^p)$ is
+tautologically equivalent to a formula in DNF.
+
+_Proof_:
+
+* If $A$ is a contradiction, then $A$ is tautologically equivalent to the DNF
+  $p\land \lnot p$, where $p$ is any atom occurring in $A$.
+* If $A$ is not a contradiction, then the following method can be used (note
+  that this is just a demonstration of the method on an example)
+
+  Suppose that $A$ has three atoms, $p,q,r$ and the value of $A$ is 1 iff $1,1,0$
+  or $1,0,1$ or $0,0,1$ are assigned to $p,q,r$ respectively.
+
+  For each of these assignments, we have a conjunctive clause with three
+  literals, each being either the atom or its negation, depending on the truth
+  value that has been assigned to it. We have the following conjunctive clauses:
+  $\;p\land q\land\lnot r$, $\;p\land\lnot q\land r$, $\;\lnot p \land\lnot
+  q\land r$. We see that the first of these clauses is true iff $p,q,r$ have
+  truth values $1,1,0$, the second is true iff $p,q,r$ have truth values $1,0,1$
+  respectively and finally the third is true iff $p,q,r$ have truth values
+  $0,0,1$.
+
+  Therefore, the follwing formula in DNF is stautologically equivalent to $A$.
+  $(p\land q\land\lnot r)\lor (p\land \lnot q\land r)\lor (\lnot p\land\lnot
+  q\land r)$.
+* If $A$ is a tautology, then the required DNF may simply be the formula
+  $p\lor\lnot p$, where $p$ is any atom occurring in $A$.
+
+This completes the "proof".
+
+The following theorem can also be proven using a similar strategy:
+
+__Theorem__: Any formula $A\in Form(A)$ is tautologically equivalent to a
+formula in CNF.
+
+##### DNF from Truth Tables
+
+Note that from the example provided in the proof above shows that it can be
+possible to construct the DNF of a formula using just its truth table.
+Consider the following truth table for the formula $A$ with three propositional
+variables $p,q,r$.
+
+| $p$ | $q$ | $r$ | $A$   |
+| --- | --- | --- | ----- |
+| 1   | 1   | 1   | __1__ |
+| 1   | 1   | 0   | 0     |
+| 1   | 0   | 1   | __1__ |
+| 1   | 0   | 0   | 0     |
+| 0   | 1   | 1   | 0     |
+| 0   | 1   | 0   | 0     |
+| 0   | 0   | 1   | __1__ |
+| 0   | 0   | 0   | 0     |
+
+From this table, it can be seen that the truth valuations under which $A$ is
+true are $1,1,1$, $1,0,1$ and $0,0,1$ for $p,q,r$ respectively.
+Using the same approach as in the theorem above, we get that
+
+$(p\land q\land r)\lor (p\land \lnot q\land r)\lor (\lnot p\land \lnot q\land r)
+\models\!\mid A$
+
+##### CNF from Truth Tables
+
+The process of __complementation__ can be used to obtain conjunctive normal
+forms from truth tables. If a formula $A$ only contains the connectives $\land,
+\lor, \lnot$, then its __complement__ is the formula formed by replacing all
+$\lor$ by $\land$, all $\land$ by $\lor$ and all atoms by their negations.
+
+Using complementation, the complement of the formula $A = (p\land q)\lor\lnot r$
+is $\lnot A= (\lnot p\lor\lnot q)\land r$
+
+Note that if a formula is in DNF, then its complement, $\lnot A$, is in CNF.
+Therefore, the CNF of a formula $A$ can be obtained from a truth table by first
+computing the DNF of $\lnot A$, then taking the complement of that.
+
