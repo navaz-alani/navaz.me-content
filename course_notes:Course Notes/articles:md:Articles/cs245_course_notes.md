@@ -1110,7 +1110,7 @@ unconditional, therefore it is a tautology,
 
 ### Argument Validity and Satisfiability
 
-Let $\Sigma = \{A_1,\dots,A_n\}\in Form(L^p)$ be a set of formulae (premises)
+Let $\Sigma = \{A_1,\dots,A_n\}\subseteq Form(L^p)$ be a set of formulae (premises)
 and let $C\in Form(A)$ be a formula (conclusion). The following are equivalent:
 
 * The argument with premises $\{A_1,\dots,A_n\}$ and conclusion $C$ is valid
@@ -1118,7 +1118,7 @@ and let $C\in Form(A)$ be a formula (conclusion). The following are equivalent:
 * $(A_1\land \dots \land A_n \land \lnot C)$ is a contradiction
 * $(A_1\land \dots \land A_n \land \lnot C)$ is not satisfiable
 * The set $\{A_1\land \dots \land A_n \land \lnot C\}$ is not satisfiable
-* $C$ is a tautological consequence of $\Sigma$ i.e. $\Sigma\models A$
+* $C$ is a tautological consequence of $\Sigma$ i.e. $\Sigma\models C$
 
 __Note__: Here are some key points that one ought to remeber about validity:
 
@@ -1946,13 +1946,13 @@ Both formal deducibility and $Form(L^p)$ are constructed inductively and one can
 observe that formulae correspond to schemes of proof and the rules of formation
 correspond to the rules of formal deduction.
 
-__$\Sigma \models\!\mid A$ VS $\Sigma \vdash A$__: There is a difference between
-tautological equivalence and formal deducibility.
+__$\Sigma \models A$ VS $\Sigma \vdash A$__: There is a difference between
+consequence and formal deducibility.
 
-* Tautological equivalence is concerned with semantic equivalence while formal
+* Tautological consequence is concerned with semantics while formal
   deducibility is concerned with syntax (Remeber: syntax is to form while
   semantics is to meaning).
-* The connection between tautological equivalence and implications is that
-  "$A\models\!\mid B$ iff $A\rightarrow B$ is a tautology".
+* The connection between tautological consequence and implications is that
+  "$A\models B$ iff $A\rightarrow B$ is a tautology".
 * The connection between formal deducibility and implications is that "$A\vdash
   B$ iff $\emptyset\vdash A\rightarrow B$".
