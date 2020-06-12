@@ -985,7 +985,7 @@ order to win. We shall populate it with conditions now:
   one can start by verifying that the starting values match. This can be done
   by satisfying each formula in
   $\Sigma_1 = \{p_{i_1,j_1,k_1}, p_{i_2,j_2,k_2}, \dots, p_{i_n,j_n,k_n}\}$.
-  We can now add each formula in $\Sigma_1$ to $\Sigma$ above ($$).
+  We can now add each formula in $\Sigma_1$ to $\Sigma$ above.
 * Next, to ensure that there is at most one digit per position in the grid,
   we can do the following. For each position $(i,j)$ and each pair of non-equal
   possible values $k,k'$, we add the formula
@@ -1082,7 +1082,7 @@ these ideas now.
 
 __Definition__ Let $\Sigma \subseteq Form(L^p)$ and $A\in Form(L^p)$. $A$ is
 said to be a __tautological consequence__ of the formulae in $\Sigma$ iff for
-any truth valuation $t$, we have that $\Sigma^t=1$ rightarrow that $A^t=1$. When
+any truth valuation $t$, we have that $\Sigma^t=1$ implies that $A^t=1$. When
 this is the case, it is denoted as $\Sigma \models A$.
 
 __Note__ the following:
@@ -1663,3 +1663,296 @@ Note that if a formula is in DNF, then its complement, $\lnot A$, is in CNF.
 Therefore, the CNF of a formula $A$ can be obtained from a truth table by first
 computing the DNF of $\lnot A$, then taking the complement of that.
 
+## Adequate Sets of Connectives
+
+So far, one unary connective ($\lnot$) and four binary connectives
+($\land,\lor,\rightarrow,\iff$) have been introduced. However, there exist many
+more connectives. In fact, there are $2^4=16$ possible binary connectives.
+
+In general, for any $n$-ary connective (one that takes $n$ arguments), there are
+$2^n$ rows in the truth table for such a connective ($2^n$ truth valuations for
+the $n$ arguments to the connective. The number of $n$-ary connectives is equal
+to the number of rows in the truth table, times the number of binary numbers of
+length (equal to the height of the truth table) $2^n$. So there are $2^{(2^n)}$
+$n$-ary connectives.
+
+__Definition__: An _adequate set_ of connectives is one that has the capability
+to express all truth tables. It can be shown that the set $\{\lnot, \land, \lor,
+\rightarrow, \iff\}$ is an adequate set of connectives. This is also known as
+the __standard set of connectives__.
+
+The objective now is to devise a method to show that a set of connectives is
+adequate.
+
+### Proofs of Adequacy
+
+__Definition__: The __arity__ of a function, $f$, is the number, $n\geq 0$ of
+inputs that the function $f$ takes. Functions with 0 inputs are called
+__nullary__. Functions with 1 input are called __unary__. Functions with 2
+inputs are called __binary__. A propositional connective, $f$, with arity $n$,
+is $f:\{0,1\}^n \mapsto \{0,1\}$.
+
+A set, $S$, of propositional connectives is said to be __adequate for
+propositional logic__ if __every__ propositional connective (of any arity) can
+be implemented using only the connectives in $S$.
+
+__Theorem__: $\{\lnot, \land, \lor\}$ is an adequate set of connectives.
+
+__Proof__: Fix any $n$-ary function $f:\{0,1\}^n \mapsto \{0,1\}$.
+Let $p_1,\dots, p_n$ be the arguments to the function $f$. We shall show that
+the function $f$ can be implemented using only the connectives in the given set.
+
+We already know of a method which can be used to do this- from the formation of
+Disjunctive Normal Forms.
+
+* Write out the truth table for $f$
+* For every row in the truth table, write out a conjunction with $n$ literals-
+  the $i$-th one being $p_i$ if, for that row, the $i$-th column equals 1 and
+  $(\lnot p)$ otherwise
+* Construct a formula $A$ that is the disjunction of all of the conjunctions
+  formed from the truth table.
+
+By construction, $A$ has the same truth table as $f$ and so we have managed to
+implement $f$ using only the connectives in the given set. Therefore, the set
+$\{\lnot, \land, \lor\}$ is adequate for propositional logic. $\blacksquare$
+
+Here is a connective that is itself adequate for propositional logic. The
+__Pierce arrow__, denoted $\downarrow$, is defined through the following truth
+table:
+
+|$p$|$q$|$p\downarrow q$|
+|---|---|---------------|
+| 1 | 1 | 0             |
+| 1 | 0 | 0             |
+| 0 | 1 | 0             |
+| 0 | 0 | 1             |
+
+Indeed, the standard set of connectives can be implemented using the Pierce
+arrow:
+
+* $\lnot p = p\downarrow p$
+* $p\land q = (p\downarrow p)\downarrow (q\downarrow q)$
+* $p\lor q = (p\downarrow q)\downarrow (p\downarrow q)$
+
+So, to test whether a set of connectives is adeqate for propositional logic, it
+suffices to show that the Pierce arrow can be implemented using that set.
+
+Another one of these beastly connectives is the Sheffer stroke, which is denoted
+as $|$. It is defined as follows:
+
+|$p$|$q$|$p$\|$q$|
+|---|---|---------------|
+| 1 | 1 | 0             |
+| 1 | 0 | 1             |
+| 0 | 1 | 1             |
+| 0 | 0 | 1             |
+
+The Sheffer stroke is also known as NAND (negation of $\land$).
+The set of connectives $\{|\}$ is also adequate. This can be shown by
+implementing the Pierce arrow using the Sheffer stroke:
+
+* $p\downarrow q = ((p|p)|(q|q))|((p|p)|(q|q))$
+
+### Proofs of Indequacy
+
+Similar to how a connective can be proven adequate, a connective can be proven
+inadequate by showing that one or more of the standard connectives cannot be
+implemented using the connective.
+
+__Example__: Show that the set of connectives $S=\{\land\}$ is inadequate.
+
+We shall show that $\lnot$ cannot be implemented using the set $S$. Note that a
+formula of one variable, say $p$, containing only the connectives in $S$ is such
+that if a truth valuation sets $p^t = 0$, then the formula itself must evaluate
+to 0.
+
+So, for it to be possible to define the standard $\lnot p$ using $S$, there
+needs to exist a formula $A$ with the only propositional variable being $p$ and
+the only connective being $\land$ such that $\lnot p \models\!\mid A$. But as
+mentioned before, if $p^t = 0$, then $A^t = 0$ too, so $\lnot p$ and $A$ cannot
+be tautologically equivalent.
+
+## Formal Deducibility
+
+So far, the methods studied for proving arguments are using truth tables and the
+semantics (tautological equivalence, $\models\!\mid$). We now desire to replace
+these methods with a purely syntactic one, with rules of deduction that are
+entirely syntactic.
+
+We now define a relation called __formal deducibility__, denoted by $\vdash$,
+which is intuitively the same as tautological equivalence, but has a different
+method of proving the validity of an argument which can be done
+mechanically/syntactically.
+
+The word "formal" in this context means that the method is only concerned with
+the syntactic form of an argument. Proofs do not refer to any semantic
+properties and can be verified mechanically.
+
+The system of proof being used in this document is the system of Natural
+Deduction, which is far from the only system of formal proof.
+
+__Conventions__: Here are some conventions to be followed to make notation
+easier.
+
+* Formal deducibility is a relationship between a set of formulae (called the
+  premises) and a formula $A$ (called the conclusion).
+* The symbol $\vdash$ denotes the relationship of formal deducibility between a
+  set and a formula. So $\Sigma \vdash A$ asserts that $A$ is formally deducible
+  from the set $\Sigma$.
+* If $\{A_1,\dots,A_n\}$ is a set of formulae, for notational convenience, the
+  curly braces may be elided. So saying $A_1,\dots,A_n$ is equivalent.
+* If $\Sigma\cup \{A\}$ is a set, where $A$ is a formula, then set-notational
+  syntax may be elided. So saying $\Sigma, A$ is equivalent.
+* If $\Sigma$ and $\Sigma^*$ are sets of formulae, then set notation syntax can
+  be elided from the expression $\Sigma\cup \Sigma^*$. So $\Sigma,\Sigma^*$ is
+  equivalent notation.
+
+### Natural Deduction
+
+A __proof__ is a finite sequence of the form $\Sigma_i \vdash A_i$. Such a
+statement is called a __sequent__.
+
+A proof is considered to be valid if every sequent in the sequence of sequents
+in the proof is created from previous sequents according to a specified proof
+rule. These rules shall be introduced soon.
+
+Also, a __theorem__ is a sequent that occurs in a valid proof (usually the last).
+
+Now, here are the rules of natural deduction. Each of $A,B,C$ is any formula and
+$\Sigma$ is any set of formulae.
+
+1. $\text{(Ref)}$ is the rule of __Reflexivity__. It says that $A\vdash A$ is a
+   theorem.
+2. $(+)$ is the rule of __Addition of Premises__. It states that if $\Sigma
+   \vdash A$ is a theorem, then so is $\Sigma, \Sigma^* \vdash A$.
+3. $(\lnot +)$ is the rule of __$\lnot$ elimination__. It states that if
+   $\Sigma, \lnot A \vdash B$ and $\Sigma, \lnot A \vdash \lnot B$ are theorems,
+   then $\Sigma \vdash A$ is a theorem.
+4. $(\rightarrow -)$ is the rule of __$\rightarrow$ elimination__. It states
+   that if $\Sigma \vdash A \rightarrow B$ and $\Sigma \vdash A$ are theorems,
+   then $\Sigma \models B$ is a theorem.
+5. $(\rightarrow +)$ is the rule of __$\rightarrow$ introduction__. It states
+   that if $\Sigma, A\vdash B$ is a theorem, then $\Sigma\vdash A\rightarrow B$
+   is a theorem.
+6. $(\land -)$ is the rule of __$\land$ elimination__. It states that if $\Sigma
+   \vdash A\land B$ is a theorem, then $\Sigma \vdash A$ and $\Sigma \vdash B$
+   are theorems.
+7. $(\land +)$ is the rule of __$\land$ introduction__. It states that if
+   $\Sigma \vdash A$ and $\Sigma \vdash B$ are theorems, them $\Sigma\vdash
+   A\land B$ is a theorem.
+8. $(\lor -)$ is the rule of __$\lor$ elimination__. It states that if $\Sigma,
+   A \vdash C$ and $\Sigma, B \vdash C$ are theorems, then $\Sigma, A\lor B
+   \vdash C$ is a theorem.
+9. $(\lor +)$ is the rule of __$\lor$ introduction__. It states that if
+   $\Sigma\vdash A$ is a theorem, then $\Sigma\models A\lor B$ and $\Sigma\vdash
+   B\lor A$ are theorems.
+10. a) $(\iff -)$ is the rule of __$\iff$ elimination__. It states that if $\Sigma
+    \vdash A\iff B$ and $\Sigma \vdash A$ are theorems, then $\Sigma \vdash B$
+    is a theorem.
+
+    b) $(\iff -)$ is the rule of __$\iff$ elimination__. It states that if $\Sigma
+    \vdash A\iff B$ and $\Sigma \vdash B$ are theorems, then $\Sigma \vdash A$
+    is a theorem.
+11. $(\iff +)$ is the rule of __$\iff$ introduction__. It states that if
+    $\Sigma, A \vdash B$ and $\Sigma, B \vdash A$ are theorems, then $\Sigma
+    \vdash A\iff B$ is a theorem.
+
+__Example__: This is called the __membership rule__. It states that if $A\in
+\Sigma$, then $\Sigma\vdash A$ is a theorem.
+
+The membership rule, when used, will now be cited as $(\in)$.
+This now shows how to prove a theorem using the method of formal deduction.
+
+__Proof__: Assume that $A\in \Sigma$ and let $\Sigma^* = \Sigma \setminus
+\{A\}$. So $\Sigma^*, A = \Sigma^* \cup A = \Sigma$.
+
+$\begin{aligned}
+&1.\quad A \vdash A &(\text{Ref})\\
+&2.\quad A,\Sigma^* \vdash A &\text{by (+) on 1}\\
+\blacksquare
+\end{aligned}$
+
+In the above proof, line 1 is generated using the $\text{(Ref)}$ rule and this
+is cited to its right. Then, line 2 is generated using line 1, by the $(+)$
+rule which is the addition of premises and this is cited to its right again.
+These citations are important because they provide justification for each step.
+Note that citations can only be made to previous lines in the proof.
+These steps provide a _formal proof_ for the statement $\Sigma \vdash A$ and so
+it is now a theorem.
+
+__Example__: Prove that $A\rightarrow B, B\rightarrow C \vdash A \rightarrow C$.
+Here is a formal proof for this statement.
+
+$\begin{aligned}
+&1.\quad A\rightarrow B, B\rightarrow C, A \vdash A\rightarrow B &(\in)\\
+&2.\quad A\rightarrow B, B\rightarrow C, A \vdash A &(\in)\\
+&3.\quad A\rightarrow B, B\rightarrow C, B \vdash B &(\rightarrow -)\text{ on
+1,2}\\
+&4.\quad A\rightarrow B, B\rightarrow C, A \vdash B\rightarrow C &(\in)\\
+&5.\quad A\rightarrow B, B\rightarrow C, A \vdash C &(\rightarrow -)\text{ on
+4,3}\\
+&6.\quad A\rightarrow B, B\rightarrow C \vdash A \rightarrow C &(\rightarrow +)
+\text{ on 5}
+\end{aligned}$
+
+In this proof, the membership rule, $(\in)$, was used as a lemma. This is
+possible because the rules of natural deduction and theorems are just schemas
+for a proof. So instead of executing each of the steps in the proof of the
+lemma, it suffices to cite the lemma, which is a theorem.
+
+Note that in the above proof, it was also possible to reorder the lines, as long
+as they all cite previous lines.
+
+#### Some Intuition
+
+* $(\lnot -)$ is the proof schema for an indirect proof/a proof by
+  contradiction. If a contradiction, which, in the rules, is $B$ and $\lnot B$
+  can be deduced from the set $\Sigma$, with an additional false premise (one
+  that does not hold), $\lnot A$, then this proposition is deducible from the
+  set: $\Sigma \vdash A$.
+* $(\lor -)$ is the proof schema for a proof by cases. If $C$ follows from $A$
+  and $C$ also follows from $B$, then $C$ follows from $A\lor B$.
+* $(\rightarrow +)$ is the proof schema used to prove an implication. In order
+  to prove $A\rightarrow B$ with a certain set of premises i.e. to prove
+  $\Sigma \vdash A\rightarrow B$, one should assume $A$ (by adding it to the
+  premises) and try to prove $B$ i.e. $\Sigma, A \vdash B$.
+
+__Definition__: Here is a complete formal definition for __formal
+deducibility__. A formal deduction system such as Natural Deduction is specified
+by a set of deduction rules.
+
+A formula $A$ is __formally deducible__ from $\Sigma$ (denoted as $\Sigma \vdash
+A$) iff $\Sigma \vdash A$ is generated by a finite numeber of applications of
+the rules of the system. So $\Sigma \vdash A$ holds iff there exists a finite
+sequence:
+
+$\begin{aligned}
+(1) \Sigma_1 &\vdash A_1\\
+&\vdots\\
+(n) \Sigma_n &\vdash A_n
+\end{aligned}$
+
+such that the following are satisfied:
+
+* Each sequent $\Sigma_i \vdash A_k$ (for $1\leq k \leq n$) is generated by one
+  rule of formal deduction from the sequents that preceed it
+* The final sequent $\Sigma_n \vdash A_n$ is the desired $\Sigma\vdash A$ i.e.
+  $\Sigma_n = \Sigma$ and $A_n = A$.
+
+The above sequence of sequents is called a __formal proof__ of its last sequent
+i.e. $\Sigma_n \vdash A_n$.
+
+Both formal deducibility and $Form(L^p)$ are constructed inductively and one can
+observe that formulae correspond to schemes of proof and the rules of formation
+correspond to the rules of formal deduction.
+
+__$\Sigma \models\!\mid A$ VS $\Sigma \vdash A$__: There is a difference between
+tautological equivalence and formal deducibility.
+
+* Tautological equivalence is concerned with semantic equivalence while formal
+  deducibility is concerned with syntax (Remeber: syntax is to form while
+  semantics is to meaning).
+* The connection between tautological equivalence and implications is that
+  "$A\models\!\mid B$ iff $A\rightarrow B$ is a tautology".
+* The connection between formal deducibility and implications is that "$A\vdash
+  B$ iff $\emptyset\vdash A\rightarrow B$".
