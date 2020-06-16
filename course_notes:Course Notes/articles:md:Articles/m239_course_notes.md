@@ -1,7 +1,19 @@
 # Intro to Combinatorics
 
-Navaz Alani
-_Spring 2020_
+_UWaterloo, Math 239, Spring 2020_
+
+Notes by Navaz Alani
+
+__Instructors__:
+
+* David Gosset (david.gosset@uwaterloo.ca)
+* David Jao (djao@uwaterloo.ca)
+* Martin Pei (mpei@uwaterloo.ca)
+* Douglas Stebila (dstebila@uwaterloo.ca)
+* Xiaohong Zhang (xiaohong.zhang@uwaterloo.ca)
+
+"Symmetry is one of the most powerful tools in the mathematics arsenal."
+~ [David Jao](https://djao.math.uwaterloo.ca/)
 
 ****
 
@@ -9,93 +21,105 @@ _Spring 2020_
 
 __Main interest__: counting the size of various sets.
 
-Let us recall the elementary operations that can be performed with sets. Let $A, B$
-be finite sets. We have the following operations:
+Let us recall the elementary operations that can be performed with sets. Let $A,
+B$ be finite sets. We have the following operations:
 
 __UNION__: $A\cup B = \{x | x \in A \text{ or } x \in B\}$
 
 __INTERSECTION__: $A\cap B = \{x | x\in A \text{ and } x \in B\}$
 
 In order to count the size of a set, one of the approaches used is to build that
-set using unions of smaller sets, whose sizes are known. It is important, therefore,
-to understand the relationship between the cardinality of a set and the cardinalities
-of the sets that it is built from.
+set using unions of smaller sets, whose sizes are known. It is important,
+therefore, to understand the relationship between the cardinality of a set and
+the cardinalities of the sets that it is built from.
 
-Most readers should be aware of the following identity: $|A\cup B| = |A| + |B| - |A\cap B|$
-which is of utmost importance when it comes to counting the size of sets as it provides
-a relationship between the cardinality of a set $A\cup B$ and the cardinalities $|A|$ and
-$|B|$. A much simpler case arises when $A\cap B = \emptyset$ i.e. when $A\cup B$ is a disjoint union- the identity reduces to $|A\cup B| = |A| + |B|$.
+Most readers should be aware of the following identity: $|A\cup B| = |A| + |B| -
+|A\cap B|$ which is of utmost importance when it comes to counting the size of
+sets as it provides a relationship between the cardinality of a set $A\cup B$
+and the cardinalities $|A|$ and $|B|$. A much simpler case arises when $A\cap B
+= \emptyset$ i.e. when $A\cup B$ is a disjoint union- the identity reduces to
+$|A\cup B| = |A| + |B|$.
 
-This identity can be extended to a more general one. Given sets $A_1, \dots, A_n$ with
-$A_i\cap A_j = \emptyset$ for $1 \leq i < j \leq n$, we have
-$|A_1\cup \dots \cup A_n| = \sum_{j=1}^n |A_j|$. This is readily proven by induction
-on $n$. In the case of $n=2$, the identity holds, as seen above. Now, assuming that the
-identity holds for some $n > 2$, we can verify it for case $n+1$:
+This identity can be extended to a more general one. Given sets $A_1, \dots,
+A_n$ with $A_i\cap A_j = \emptyset$ for $1 \leq i < j \leq n$, we have $|A_1\cup
+\dots \cup A_n| = \sum_{j=1}^n |A_j|$. This is readily proven by induction on
+$n$. In the case of $n=2$, the identity holds, as seen above. Now, assuming that
+the identity holds for some $n > 2$, we can verify it for case $n+1$:
 
 $\begin{aligned}
-    |A_1\cup \dots \cup A_n \cup A_{n+1}| &= |(A_1\cup \dots \cup A_n) \cup A_{n+1}|\\
-    &= |(A_1\cup \dots \cup A_n)| + |A_{n+1}| - |(A_1\cup \dots \cup A_n)\cap A_{n+1}|\\
-    &= \sum_{i=1}^n |A_i| + |A_{n+1}| - |(A_1 \cap A_{n+1})\cup \dots \cup (A_n\cap A_{n+1})|\\
-    &= \sum_{i=1}^{n+1} |A_i| - |\emptyset|
-    = \sum_{i=1}^{n+1} |A_i|
+    |A_1\cup \dots \cup A_n \cup A_{n+1}| &= |(A_1\cup \dots \cup A_n)
+    \cup A_{n+1}|\\
+    &= |(A_1\cup \dots \cup A_n)| + |A_{n+1}| - |(A_1\cup \dots
+    \cup A_n)\cap A_{n+1}|\\
+    &= \sum_{i=1}^n |A_i| + |A_{n+1}| - |(A_1 \cap A_{n+1})\cup \dots \cup
+    (A_n\cap A_{n+1})|\\
+    &= \sum_{i=1}^{n+1} |A_i| - |\emptyset| = \sum_{i=1}^{n+1} |A_i|
 \end{aligned}$
 
-This allows us to state one of the techniques used for problem solving in this course:
-__Recognizing that a set can be expressed as a disjoint union of other sets__. The general
-identity derived above proves to be helpful in this technique. Now, back to set operations:
+This allows us to state one of the techniques used for problem solving in this
+course: __Recognizing that a set can be expressed as a disjoint union of other
+sets__. The general identity derived above proves to be helpful in this
+technique. Now, back to set operations:
 
-__CARTESIAN PRODUCT__: $A\times B = \{(a, b) | a \in A, b \in B\}$. This object has the
-property that $|A \times B| = |A|\cdot |B|$.
+__CARTESIAN PRODUCT__: $A\times B = \{(a, b) | a \in A, b \in B\}$. This object
+has the property that $|A \times B| = |A|\cdot |B|$.
 
-__CARTESIAN POWER__: $A^k = \{(a_1, \dots, a_k) | a_1\in A, \dots, a_k\in A\}$. This object
-can be expressed alternatively as the cartesian product of $A$ with itself, $k$ times and has
-the property that $|A^k| = |A|^k$.
+__CARTESIAN POWER__: $A^k = \{(a_1, \dots, a_k) | a_1\in A, \dots, a_k\in A\}$.
+This object can be expressed alternatively as the cartesian product of $A$ with
+itself, $k$ times and has the property that $|A^k| = |A|^k$.
 
-__Example__: Let $S=\{0,1\}^k = \{(z_1, \dots, z_k) | z_1, \dots, z_k \in \{0,1\}\}$.
-$S$ is called the set of $k$-tuples of bits. Using the property of the cartesian product
-outlined above, we see that $|S| =|\{0,1\}^k| = |\{0,1\}|^k = 2^k$.
+__Example__: Let $S=\{0,1\}^k = \{(z_1, \dots, z_k) | z_1, \dots, z_k \in
+\{0,1\}\}$.  $S$ is called the set of $k$-tuples of bits. Using the property of
+the cartesian product outlined above, we see that $|S| =|\{0,1\}^k| =
+|\{0,1\}|^k = 2^k$.
 
-__Example__: Let $S=\{(z_1, z_2, z_3)\in \{0,1\}^3 | z_1 + z_2 + z_3 \leq 1\}$. Find $|S|$.
-In this case, it may be easy to write out the elements of $S$ and count them but we shall
-use the method of expressing $S$ as a union of 2 disjoint sets to see how it works.
+__Example__: Let $S=\{(z_1, z_2, z_3)\in \{0,1\}^3 | z_1 + z_2 + z_3 \leq 1\}$.
+Find $|S|$.  In this case, it may be easy to write out the elements of $S$ and
+count them but we shall use the method of expressing $S$ as a union of 2
+disjoint sets to see how it works.
 
-We can write $S=A\cup B$ where $A=\{(z_1,z_2,z_3)\in \{0,1\}^3 | z_1 + z_2 + z_3 = 0\}$
-and $B=\{(z_1,z_2,z_3)\in \{0,1\}^3 | z_1 + z_2 + z_3 = 1\}$. So clearly,
-$A\cap B = \emptyset$ by the definition of $A$ and $B$. This allows us to say that
-$|S| = |A| + |B|$.
+We can write $S=A\cup B$ where $A=\{(z_1,z_2,z_3)\in \{0,1\}^3 | z_1 + z_2 + z_3
+= 0\}$ and $B=\{(z_1,z_2,z_3)\in \{0,1\}^3 | z_1 + z_2 + z_3 = 1\}$. So clearly,
+$A\cap B = \emptyset$ by the definition of $A$ and $B$. This allows us to say
+that $|S| = |A| + |B|$.
 
-Now, we can count: $A = \{(0,0,0)\}$ so $|A| = 1$ and $B = \{(1,0,0), (0,1,0), (0,0,1)\}$
-so that $|B| = 3$. Therefore, $|S| = 1 + 3 = 4$.
+Now, we can count: $A = \{(0,0,0)\}$ so $|A| = 1$ and $B = \{(1,0,0), (0,1,0),
+(0,0,1)\}$ so that $|B| = 3$. Therefore, $|S| = 1 + 3 = 4$.
 
 ### Binomial Coefficients
 
 These come up a lot when it comes to enumeration and counting problems so getting
 comfortable with the binomial coefficients is important.
 
-__Definition__: $S_{k,n} := \{\Omega \in \{1, \dots, n\} | |\Omega| = k\}$. This will
-prove to be an important set definition once some of its properties have been uncovered.
-$S_{k,n}$ is the set of all subsets of $\{1, \dots, n\}$ of size $k$.
+__Definition__: $S_{k,n} := \{\Omega \in \{1, \dots, n\} | |\Omega| = k\}$. This
+will prove to be an important set definition once some of its properties have
+been uncovered.  $S_{k,n}$ is the set of all subsets of $\{1, \dots, n\}$ of
+size $k$.
 
-In general, this set can be used to understand many real-life situations e.g. the number of
-5-card hands from a standard deck of 52 cards is $|S_{5,52}|$.
+In general, this set can be used to understand many real-life situations e.g.
+the number of 5-card hands from a standard deck of 52 cards is $|S_{5,52}|$.
 
-__THEOREM__: let $0 \leq k \leq n$. Then $|S_{k,n}| = \frac{n(n-1)\cdots(n - k + 1)}{k!}$.
+__THEOREM__: let $0 \leq k \leq n$. Then $|S_{k,n}| = \frac{n(n-1)\cdots(n - k +
+1)}{k!}$.
 
-__Proof__: Let $L_{k,n} := \{(a_1,\dots,a_k)\in \{1,\dots,n\}^k | a_i\neq a_j \text{ for }
-i\neq j \}$. $L_{k,n}$ is the set of all $k$-tuples of distinct elements of $\{1,\dots,n\}$.
+__Proof__: Let $L_{k,n} := \{(a_1,\dots,a_k)\in \{1,\dots,n\}^k | a_i\neq a_j
+\text{ for } i\neq j \}$. $L_{k,n}$ is the set of all $k$-tuples of distinct
+elements of $\{1,\dots,n\}$.
 
-What is $|L_{k,n}|$? Well, since the elements in the $k$-tuples are distinct, there are
-$n$ possibilities for the first one, $n-1$ possibilities for the second one and so on. In
-general, for the $j$-th element in the tuple, there $n-(j-1)$ possibilities. Therefore,
-we get that $|L_{k,n}| = n(n-1)\cdots (n-(k-1))$.
+What is $|L_{k,n}|$? Well, since the elements in the $k$-tuples are distinct,
+there are $n$ possibilities for the first one, $n-1$ possibilities for the
+second one and so on. In general, for the $j$-th element in the tuple, there
+$n-(j-1)$ possibilities. Therefore, we get that $|L_{k,n}| = n(n-1)\cdots
+(n-(k-1))$.
 
-Now, we shall analyse a relationship between $L_{k,n}$ and $S_{k,n}$ which will allow us
-to compute $|S_{k,n}|$. Observe the following:
+Now, we shall analyse a relationship between $L_{k,n}$ and $S_{k,n}$ which will
+allow us to compute $|S_{k,n}|$. Observe the following:
 
-* Each $(a_1, a_2, \dots, a_k) \in L_{k,n}$ can be mapped to an element $\{a_1,\dots, a_k\}
-\in S_{k,n}$. This mapping removes the ordering from the $k$-tuple.
-* Each $\{a_1,\dots, a_k\} \in S_{k,n}$ is then the image of $k!$ different elements in
-$L_{k,n}$.
+* Each $(a_1, a_2, \dots, a_k) \in L_{k,n}$ can be mapped to an element
+  $\{a_1,\dots, a_k\} \in S_{k,n}$. This mapping removes the ordering from the
+  $k$-tuple.
+* Each $\{a_1,\dots, a_k\} \in S_{k,n}$ is then the image of $k!$ different
+  elements in $L_{k,n}$.
 
 Using these 2 observations, we may see the following:
 
@@ -105,20 +129,23 @@ $\implies |S_{k,n}| = \frac{|L_{k,n}|}{k!}$, as desired.
 
 Now, we may move forward to define the following object:
 
-__Binomial Coefficient__: $\binom{n}{k} := \frac{n(n-1)\cdots(n - k + 1)}{k!}$ for $0\leq k
-\leq n$. Note that by this defintion, it can also be seen that
-$\binom{n}{k} = \frac{n!}{(n-k)!k!}$. This version of the definition immediately reveals the
-symmetrical nature of the binomial coeffcient: $\binom{n}{k} = \binom{n}{n-k}$ because of the
-commutativity of multiplication in the denominator. For convenience and convention, we also
-define $\binom{n}{k} = 0$ for $k > n$.
+__Binomial Coefficient__: $\binom{n}{k} := \frac{n(n-1)\cdots(n - k + 1)}{k!}$
+for $0\leq k \leq n$. Note that by this defintion, it can also be seen that
+$\binom{n}{k} = \frac{n!}{(n-k)!k!}$. This version of the definition
+immediately reveals the symmetrical nature of the binomial coeffcient:
+$\binom{n}{k} = \binom{n}{n-k}$ because of the commutativity of multiplication
+in the denominator. For convenience and convention, we also define
+$\binom{n}{k} = 0$ for $k > n$.
 
-Now, let $A_{k,n} = \{(z_1,\dots,z_n)\in \{0,1\}^n | z_1 + \dots + z_n = k\}$ for $0\leq k
-\leq n$. What is $|A_{k,n}|$? In previous proof, the size of $S_{k,n}$ was determined by
-analysing its relationship with $L_{k,n}$ whose size we could easily determine: we showed
-$L_{k,n}$ is $k!$ times larger than $S_{k,n}$, essentially proving a 1 to many mapping
-$S_{k,n} \mapsto L_{k,n}$. This strategy can also be used to find $|A_{k,n}|$ with the only
-difference being that this time, the relationship is 1-1 with a set of size $\binom{n}{k}$.
-We conveniently already have such a set! - $|S_{k,n}| = \binom{n}{k}$, as previously shown.
+Now, let $A_{k,n} = \{(z_1,\dots,z_n)\in \{0,1\}^n | z_1 + \dots + z_n = k\}$
+for $0\leq k \leq n$. What is $|A_{k,n}|$? In previous proof, the size of
+$S_{k,n}$ was determined by analysing its relationship with $L_{k,n}$ whose
+size we could easily determine: we showed $L_{k,n}$ is $k!$ times larger than
+$S_{k,n}$, essentially proving a 1 to many mapping $S_{k,n} \mapsto L_{k,n}$.
+This strategy can also be used to find $|A_{k,n}|$ with the only difference
+being that this time, the relationship is 1-1 with a set of size
+$\binom{n}{k}$.  We conveniently already have such a set! - $|S_{k,n}| =
+\binom{n}{k}$, as previously shown.
 
 __THEOREM__: $|A_{k,n}| = \binom{n}{k}$
 
@@ -896,7 +923,7 @@ $b_n = \frac{1}{a_0}\left( c_n - \sum_{j=0}^{n-1} a_{n-j}b_j \right)$
 
 __COMPOSITION__: This is yet another operation defined on formal power series.
 Let $A(x) = \sum_{j\geq 0}a_j x^j$ and $B(x) = \sum_{j\geq 0}b_j x^j$ be formal
-power series. If $b_0=$ then we define:
+power series. If $b_0=0$ then we define:
 
 $\begin{aligned}
   A(B(x)) &= \sum_{j\geq 0} a_j B(x)^j
@@ -1046,3 +1073,497 @@ $\begin{aligned}
   &= \Phi_A(x)\Phi_B(x)\\
   \blacksquare
 \end{aligned}$
+
+## Integer Compositions
+
+__Definition__: A __composition of an integer $n$__ is a tuple of positive
+integers $(a_1,\dots, a_k)$ such that $\sum_{i=1}^k a_i = n$. We say that this
+composition of $n$ has $k$ parts. Note that a composition is a tuple and
+therefore order matters! Furthermore, note that the parts in a integer
+composition are strictly positive integers and therefore 0 is not a valid part.
+
+Also, by convention, $n=0$ has one composition- the empty composition $()$.
+
+The goal is to answer questions of the form: "How many integer compositions of
+$n$ have some property $P$?" The property $P$ could be anything of interest.
+Here are some examples:
+
+* $P=$ the number of parts is $k$
+* $P=$ the parts are even
+* $P=$ the parts are congruent to 1 modulo 3.
+
+The general strategy to solve such problems is as follows:
+
+1. Define a set, say $S$, which contains all of the intger compositions with the
+   property $P$.
+2. Define an appropriate weight function $w$, such that the solution to the
+   question of interest is given by $[x^n]\Phi_S(x)$.
+3. Compute the generating series of $S$, with respect to the weight function
+   $w$, $\Phi_S(x)$.
+4. Finally, compute $[x^n]\Phi_S(x)$.
+
+The toolbox that will allow us to perform these steps includes the following:
+
+* Sum lemma: if $A\cap B = \emptyset$, then $\Phi_{A\cup B}(x)=\Phi_A(x) +
+  \Phi_B(x)$
+* Product lemma: with the condition of the weight functions satisfied, one has
+  $\Phi_{A\times B}(x) = \Phi_A(x)\Phi_B(x)$
+* Power shifts: $[x^n]x^kA(x) = \begin{cases}
+    [x^{n-k}]A(x) &\text{ if }n\geq k\\
+    0 &\text{ if }n<k
+  \end{cases}$
+* Geometric series: $\sum_{i=0}^\infty x^i = \frac{1}{1-x}$
+* Composition of geometric series: If $[x^0]A(x) = 0$, then $\sum_{i=0}^\infty
+  (A(x))^i = \frac{1}{1-A(x)}$
+* Negative binomal series: $\frac{1}{(1-x)^k}=\sum_{n=0}^\infty
+  \binom{n+k-1}{k-1} x^n$
+
+__Example__: Compute the number of compositions of $n$ with $k$ parts.
+
+First, we need a set which contains all the integer compositions with $k$ parts.
+Let $S=N^k$, where $N=\{1,2,3,\dots\}$.
+
+Then, define an appropriate weight function. Let $w:S\mapsto \{0,1,2,\dots\}$ be
+defined as follows: for all $X=(x_1,\dots,x_k)\in S$, $w(X)=\sum_{i=0}^k x_i$.
+
+With these definitions in place, the answer to the "number of compositions of
+$n$ which have $k$ parts" is just $[x^n]\Phi_S(x)$. We now compute it.
+
+$\begin{aligned}
+\Phi_S(x) &= \Phi_{N^k}(x)\\
+&= \left( \Phi_N(x) \right)^k &\text{Product Lemma}\\
+&= \left( \sum_{j\geq 1} x^j \right)^j\\
+&= \frac{x^k}{(1-x)^k}
+\end{aligned}$
+
+Now, using the multiplicative shift rule, one sees that:
+
+$\begin{aligned}
+[x^n]\Phi_S(x) &= \begin{cases}
+  0 &\text{ if } n< k\\
+  \binom{n-1}{k-1} &\text{ if } n\geq k
+\end{cases}
+\end{aligned}$
+
+The last case evaluates to the binomial coefficient given because of the
+negative binomial theorem.
+
+## Binary Strings
+
+This is another object which can be studied very interestingly with the concepts
+of generating series. First, some definitions regarding binary strings:
+
+__Definition__: A __binary string__ (a.k.a. $\{0,1\}$-string) is a strings
+consisting of only ones and zeroes. The __length of a binary string__ is defined
+to be the total number of ones and zeroes in the string.
+
+__Definition__: $b$ is a substring of $s$ if $s=abc$ for some binary strings
+$a,c$ (which could possibly be empty strings). The expression $abc$ will become
+clear when concatenation is defined soon.
+
+__Definition__: A __block__ in a binary string is a _maximal, non-empty_
+substring which consists of only ones or only zeroes.
+
+__Definition__: __Concatenation__ of two binary strings $a,b$ is the string
+$ab$.
+
+__Definition__: If $A$ and $B$ are sets of binary strings, we define
+$AB=\{ab|a\in A \text{ and }b\in B\}$. So $AB$ is the set consisting of all the
+concatenations of a string in $A$ with a string in $B$.
+
+Also, $A^k$ is defined to be $A\cdot A\cdot \dots \cdot A$, $k$ times. Note that
+this notation is overloaded with the Cartesian product for regular sets.
+
+__Definition__: For any set $A$ of binary strings, define the __star operation__
+as follows:
+
+$\begin{aligned}
+  A^* &= \{\epsilon\}\cup A \cup A^2 \cup \dots \\
+  &= \cup_{k=0}^\infty A^k
+\end{aligned}$
+
+where $\epsilon$ is defined to be the empty string (which has length 0).
+
+With this star operation, it is possible to define the set of all binary strings
+as $\{0,1\}^*$. It also allows us to create more specific sets of strings
+(which, as in the case of integer compositions is the first step in solving a
+combinatorial problem involving binary strings). For example, the set
+$\{0\}\{00\}^*$ contains all of the strings of odd length containing only
+zeroes.
+
+The goal is to be able to answer questions of the form "How many binary strings
+of length $n$ have property $P$?". Again, property $P$ could be anything of
+interest in the context of binary strings:
+
+* $P=$ no adjacent ones
+* $P=$ exactly $k$ occurrences of the substring $110$
+* $P=$ no occurrences of the substring $111$.
+
+The strategy is very similar to the one used for integer compositions:
+
+1. Devise a set $S$ of all binary strings which have the desired property $P$
+2. Let $w:S\mapsto \{0,1,2,\dots\}$ be a weight function which, for all $\sigma
+   \in S$, $w(\sigma)=$ length of $\sigma$.
+3. The desired answer will then be $[x^n]\Phi_S(x)$
+
+While the strategy may be the same as the one for integer compositions, binary
+strings have some nuances which require that the set of tools (specifically the
+product and sum lemmas) to be readjustment to handle the nuances. In particular,
+one may not immediately see how the product lemma may be used for binary strings
+as there is no operation of Cartesian products, just concatenation and these two
+are __not__ the same.
+
+Consider the two sets of binary strings $A = \{ 010, 01 \}$ and $B = \{ 0, 00
+\}$. The Cartesian product $A\times B$ has 4 elements. But observe the set of
+strings in the set $AB = \{ 0100, 10100, 101 \}$. Note that the product lemma
+does not hold in this case: $\Phi_{AB}(x) = x^3 + x^4 + x^5$ and this is not the
+product of $\Phi_A(x) = x^2 + x^3$ and $\Phi_B(x) = x + x^2$. In particular, one
+cannot draw a bijection between $AB$ and $A\times B$- there are two elements in
+$A\times B$, namely $(010, 0)$ and $(01, 00)$ which map to the same string
+"0100" in $AB$. To deal with this, we introduce the concept of ambiguity:
+
+__Definition__: Let $A$ and $B$ be sets of binary strings. The expression $AB$
+is ambiguous if there exist $a_1,a_2 \in A$ and $b_1, b_2 \in B$ such that
+$a_1b_1 = a_2b_2$.
+
+The expression $A\cup B$ is ambiguous if $A\cap B \neq \emptyset$.
+
+An expression involving concatenations and unions of sets of binary strings is
+ambiguous if any of the constituent concatenations or unions of sets is
+ambiguous.
+
+An expression is said to be unambiguous iff it is not ambiguous.
+
+Using this definition, for example, the set $A^k$ is ambiguous if there exist
+$a_1, \dots, a_k, a_1', \dots a_k' \in A$ such that $(a_1,\dots, a_k)\neq (a_1',
+\dots, a_k')$ and $a_1\dots a_k = a_1'\dots a_k'$.
+
+__Example__: Show that the expression $\{ 0 \} \{ 00 \}^*$ is unambiguous.
+
+First, we show that the star operation is unambiguous. The set $\{ 00 \} = \{
+\epsilon \} \cup \{ 00 \} \cup \{ 00 \}^2 \cup \dots$. Firstly, these are
+clearly disjoint unions. Next, note that the set $\{ 00 \}^k$ is unambiguous for
+all $k\geq 0$; we have that $\{ 00 \}^k = \{ \underbrace{00\dots 00}_\text{2k
+zeros} \}$.
+
+Next, the concatenation with $\{ 0 \}$ is unambiguous. If we have two strings
+$0b = 0b'$, then clearly $b = b'$. So the expression $\{ 0 \} \{ 00 \}^*$ is
+unambiguous.
+
+Now, here are some very useful unambiguous expressions for the set of all binary
+strings. They are important because they can be "refined" to smaller unambiguous
+sets.
+
+* $\{ 0, 1 \}$. This one is trivial.
+* $\{ 0 \}^* \left( \{ 1 \} \{ 0 \}^* \right)^*$. In this expression, a binary
+  string is split by the ones in the string.
+* $\{ 0 \}^* \left( \{ 1 \} \{ 1 \}^* \{ 0 \} \{ 0 \}^* \right)^* \{ 1 \}^*$.
+  This expression is called the _block decomposition_ of the set of binary
+  strings. A binary string here is viewed as a block of ones followed by a block
+  of zeros, with a possible starting block of zeros and a possible ending block
+  of ones.
+
+__Note__: One may find it important to know that by the laws of symmetry, it is
+perfectly acceptable and valid to switch the ones and zeros in the above
+ambiguous expressions and end up with a valid unambiguous expression.
+
+Depending on the situation, one of these expressions will be easier to
+manipulate to reduce it into a set of binary strings with desired properties.
+For example, in a question specifying conditions on the blocks of ones and the
+blocks of zeros, the block decomposition may be a good place to start.
+
+__Example__: Derive an expression for the set of all binary strings with no 3
+consecutive zeros.
+
+Since this question only deals with the blocks of zeros, we can use the second
+one of the unambiguous decompositions and refine it down to an expression for
+the set of all binary strings with no 3 consecutive zeros.
+
+In the expression $\{ 0 \}^* \left( \{ 1 \} \{ 0 \}^* \right)^*$, the parts of
+concern are the ones with zeros. The set $\{ 0 \}^* = \{ \epsilon, 0, 00,
+\dots \}$ needs to be reduced down to the set $\{ \epsilon, 0, 00 \}$.
+
+Replacing $\{ 0 \}^*$ with this reduced set in the unambiguous expression above
+results in the following set $\{ \epsilon, 0, 00 \}^* \left( \{ 1 \} \{
+\epsilon, 0, 00 \} \right)^*$ which is an unambiguous expression for the set of
+all binary strings which have no 3 consecutive zeros.
+
+Equipped with this concept of unambiguity, one modification needs to be made
+before computing generating series for sets of binary strings. This is that the
+expression for the set $S$ needs to be unambiguous in order to sanely compute
+its generating series. Here are some theorems to aid with this goal:
+
+__Theorem__: Let $A$ and $B$ be sets of binary strings.
+
+1. If $AB$ is unambiguous, then $\Phi_{AB}(x) = \Phi_A(x) \Phi_B(x)$. This is
+   called the product lemma for binary strings
+2. If $A\cup B$ is unabiguous, then $\Phi_{A\cup B}(x) = \Phi_A(x) + \Phi_B(x)$.
+   This is called the sum lemma for binary strings.
+3. If $A^*$ is unambiguous, then $\Phi_{A^*}(x) = \frac{1}{1 - \Phi_A(x)}$. This
+   is called the star rule.
+
+_Proof_:
+
+Let $l(x)$ be the function which returns the length of the binary string $x$.
+This is the default weight function for binary strings, unless otherwise
+specified.
+
+1. In this case, note that an element $\sigma \in AB$ is unambiguously a
+   concatenation of some element $a\in A$ with a $b\in B$.
+   $\begin{aligned}
+     \Phi_{AB}(x) &= \sum_{\sigma \in AB} x^{l(\sigma)}\\
+     &= \sum_{a\in A \text{ and } b\in B} x^{l(ab)}\\
+     &= \sum_{a\in A \text{ and } b\in B} x^{l(a) + l(b)}\\
+     &= \left( \sum_{a\in A} x^{l(a)} \right) \left( \sum_{b\in B} x^{l(b)}
+     \right)\\
+     &= \Phi_A(x) \Phi_B(x)
+   \end{aligned}$
+
+2. This case is pretty simple as $A\cup B$ is unambiguous iff it is a disjoint
+   union. Therefore the sum lemma can be used.
+
+   $\Phi_{A\cup B}(x) = \Phi_A(x) + \Phi_B(x)$
+
+3. We rewrite $A^* = \cup_{k=0}^\infty A^k$. Since $A^i \cap A^j = \emptyset$
+   for all $0 \leq i \neq j$, the sum lemma can be applied. Also, since each
+   $A^k$ is unambiguous for all $k\geq 0$, the product lemma may be applied.
+
+   $\begin{aligned}
+     \Phi_{A^*}(x) &= \sum_{k=0}^\infty \Phi_{A^k}(x) &\text{Sum lemma}\\
+     &= \sum_{k=0}^\infty \left[ \Phi_A(x) \right]^k &\text{Product lemma}
+   \end{aligned}$
+
+   Now, this last term looks like a composition with the geometric series, but
+   to be sure, we have to verify that $[x^0] \Phi_A(x) = 0$. Note that $A^0 = \{
+   \epsilon \}$ and that $A^j \cap A^i = \emptyset$ for all $0\leq i\neq j$ by
+   the unambiguity of $A^*$. This means that $\epsilon \notin A$ and so there is
+   no string in $A$ with length 0, so the constant term of $\Phi_A(x)$ must be
+   0- so this is indeed a valid composition. Finally, we get:
+
+   $\begin{aligned}
+     \Phi_{A^*}(x) &= \sum_{k=0}^\infty \left[ \Phi_A(x) \right]^k \\
+     &= \frac{1}{1-\Phi_A(x)}
+   \end{aligned}$
+
+__Example__: Compute the number of binary strings of length $n$ with no
+substring $11$.
+
+First, we need an unambiguous expression for the set of all binary strings with
+no substring $11$. We can use symmetry and reverse one of the unambiguous
+expressions for the set of all binary strings to get a good starting point. We
+reverse the ones and zeros in the unambiguous expression $\{ 0 \}^* \left( \{ 1
+\} \{ 0 \}^* \right)^*$ to get $\{ 1 \}^* \left( \{ 0 \} \{ 1 \}^* \right)^*$.
+Now, we refine this expression down so that every block of ones does not contain
+the substring 11. This gives the expression $S = \{ \epsilon, 1 \} \left( \{ 0
+\} \{ \epsilon, 1 \} \right)^*$.
+
+Now, proceeding to compute the generating series of the set $S$ with respect to
+string length as the weight function. Note that the product and star rules may
+be applied because the expression for $S$ above is unambiguous.
+
+$\begin{aligned}
+\Phi_{S}(x) &= \Phi_{\{ \epsilon, 1 \}}(x) \Phi_{\left( \{ 0
+  \} \{ \epsilon, 1 \} \right)^*}(x) &\text{Product lemma}\\
+&= \frac{ \Phi_{\{ \epsilon, 1 \}}(x) }{ 1 - \Phi_{\{ 0 \} \{ \epsilon, 1
+  \}}(x)} &\text{Star rule}\\
+&= \frac{ \Phi_{\{ \epsilon, 1 \}}(x) }{ 1 - \Phi_{\{ 0 \}}(x) \Phi_{\{
+  \epsilon, 1 \}}(x)} &\text{Product rule}\\
+&= \frac{ 1 + x }{ 1 - x(1 + x) } \\
+&= \frac{ 1 + x }{ 1 - x - x^2 }
+\end{aligned}$
+
+With this expression, note that we can do the following simplification:
+
+$\begin{aligned}
+[x^n] \Phi_A(x) &= [x^n] \frac{1}{ 1 - x - x^2 } + [x^n] \frac{x}{ 1 - x -
+  x^2}\\
+  &= [x^n]\frac{1}{ 1 - x - x^2 } + [x^{n-1}]\frac{1}{ 1 - x - x^2 }\\
+  &= f_n + f_{n-1}
+\end{aligned}$
+
+where $f_n = [x^n]\frac{1}{ 1 - x - x^2 }$. This is actually part of the
+Fibonacci sequence. Computing the starting terms of $f_n$ is easy by comparing
+coefficients. We get $f_0 = f_1 = 1$. Putting all of this together, we finally
+get that:
+
+$\begin{aligned}
+[x^n]\Phi_S(x) &= \begin{cases}
+  1 &\text{ if } n = 0\\
+  f_{n} + f_{n - 1} &\text{ if } n\geq 1
+\end{cases}
+\end{aligned}$
+
+This makes intutive sense. When $n=0$, there is clearly only one string with
+length 0, which does not contain the substring $11$, namely the empty string.
+Then, there are two strings of length 1 which do not contain the string $11$ and
+so on.
+
+### Recursive Decompositions
+
+Sometimes, recursive definitions can help to make computation of generating
+series easier. Note that recursive decompositions are just expressions and the
+rules that have so far been used to compute generating series will still be used
+with them, just with collection of like terms to get the final series.
+
+Here is an example. Let us derive a recursive decomposition for the set of all
+binary strings, say $S$. One way to approach this is by selecting an arbitrary
+string in $S$ and analysing it to see what could come next. In this case, any
+binary string could start with either a $1$ or a $0$ and it could be followed by
+a sequence of ones or zeros i.e. another binary string. Or, the binary string
+could simply be the empty string. This gives us the simple recursive definition
+for the set of all binary strings as $S = \{ \epsilon \} \cup \{ 0, 1 \}S$.
+
+Now, let us try to compute the generating series of this set $S$ with this
+representation. Note that we can still use the product lemma here as the
+concatenation is clearly unambiguous and the sum lemma because the union is
+disjoint.
+
+$\begin{aligned}
+  \Phi_S(x) &= \Phi_{ \{ \epsilon \} }(x) + \Phi_{ \{ 0, 1 \} S }(x) &\text{Sum
+  lemma}\\
+  &= 1 + \Phi_{ \{ 0, 1 \} }(x) \Phi_S(x) &\text{Product lemma}\\
+  &= 1 + 2x \Phi_S(x)
+\end{aligned}$
+
+By collecting like terms, one ends up with the generating series: $\Phi_S(x) =
+\frac{1}{1-2x}$.
+
+__Example__: Another example is an expression for the set of all binary strings
+with no substring $11$. Let the set of all such strings be $S$.
+
+Firstly, a string in $S$ is either the empty string, starts with a one or starts
+with a zero. Let $A_0$ be the set of all binary strings which start with a zero.
+And let $A_1$ be the set of all binary strings which start with a one.
+So $S = \{ \epsilon \} \cup A_0 \cup A_1$. Note that this is a disjoint union of
+sets and so the sun lemma is applicable.
+
+Here are some observations that will make life easier. Firstly, an element in
+$A_0$ is such that it begins with a $0$ and then a sequence of ones and zeros
+follow i.e. another binary string. Therefore, we get the expression $A_0 = \{ 0
+\} S$. Similarly, an element in $A_1$ is either the string $1$ or the string $1$
+concatenated to the beginning of every string in $A_0$. More precisely, $A_1 =
+\{ 1 \} \cup \{ 1 \} A_0$. Now, we can use these expressions in order to compute
+the generating series of the set $S$.
+
+$\begin{aligned}
+  \Phi_S(x) &= \Phi_{ \{ \epsilon \} }(x) + \Phi_{ \{ 0 \} S }(x) + \Phi_{ \{ 1
+  \} }(x) + \Phi_{ \{ 1 \} \{ 0 \} S }(x) &\text{Sum lemma}\\
+  &= \Phi_{ \{ \epsilon \} }(x) + \Phi_{ \{ 0 \} }(x) \Phi_S(x) + \Phi_{ \{ 1 \}
+  }(x) + \Phi_{ \{ 1 \} }(x) \Phi_{ \{ 0 \} }(x) \Phi_{ S }(x) &\text{Product
+  lemma}\\
+  &= 1 + x\Phi_S(x) + x + x^2\Phi_S(x)
+\end{aligned}$
+
+By collecting like terms and solving for $\Phi_S(x)$ yields
+
+$\begin{aligned}
+  \Phi_S(x) &= \frac{ 1 + x }{ 1 - x - x^2 }
+\end{aligned}$
+
+This is the same answer as the one obtained when using unambiguous expressions.
+
+## Coefficients of Rational Functions
+
+This is a new tool that can be used when solving combinatorial problems such as
+the ones being dealt above. Specifically, these are tools for computing $[x^n]
+\frac{ f(x) }{ g(x) }$ where $f,g$ are polynomials.
+
+A starting point will be the method of partial fractions. In specific cases, it
+can be used to split a rational polynomial to a form where its coefficients are
+easy to compute using composition with geometric series or the negative binomial
+series.
+
+The method of partial fractions will be generalized to rational fractions of the
+form $\frac{ f(x) }{ g(x) }$ where $f,g$ are polynomials and $\deg( f ) < \deg(
+g )$ and $[x^0] g(x) = 0$.
+
+__Notes__: Here are some points before proceeding:
+
+* Without loss of generality (WLOG), we can assume that $[x^n] g(x) = 1$ since
+  it is non-zero- this is fine because it can be scaled to 1 anyway by
+  multiplying the numerator and denominator by a constant.
+* By the fundamental theorem of algebra, $g$ can be factorized over the complex
+  numbers as $g(x) = (\alpha_1 - x)^{e_1} \dots (\alpha_k - x)^{e_k}$. Note that
+  the multiplicities $e_1, \dots, e_k \geq 1$ and $\sum_{i=0}^k e_i = \deg( g
+  )$. Also, the values $\alpha_1, \dots, \alpha_k \in \mathbf{C}\setminus \{ 0
+  \}$- they must be non-zero complex numbers since the constant term of $g$ is
+  non-zero.
+
+  Furthermore, if we let $r_i = \alpha_i^{-1}$ for $1\leq i \leq k$, Since the
+  constant term of $g$ is effectively $1$, we can re-write it as:
+  $g(x) = ( 1 - r_1 x )^{e_1} \dots ( 1 - r_k x )^{e_k}$
+
+Now, we generalize the theorem of partial fractions. This will be just the
+statement and not the proof (I may include the proof at a later time).
+
+__Theorem \[ Partial Fractions \]__: Suppose $f,g$ are polynomials with $\deg(
+f) < \deg( g )$ and $g(x) = ( 1 - r_1 x )^{e_1} \dots ( 1 - r_k x )^{e_k}$ with
+$r_1, \dots, r_k$ distinct complex numbers and $e_1, \dots, e_k$ are integers
+greater that one which add up to the degree of $g$. Then:
+
+$\begin{aligned}
+  \frac{ f(x) }{ g(x) } &= \frac{C_{1,1}}{(1-r_1x)} +
+  \frac{C_{1,2}}{(1-r_1x)^2} + \dots + \frac{C_{1,e_1}}{(1-r_1x)^{e_1}} \\
+  &+ \frac{C_{2,1}}{(1-r_2x)} + \frac{C_{2,2}}{(1-r_2x)^2} + \dots +
+  \frac{C_{1,e_2}}{(1-r_2x)^{e_2}} \\
+  &\vdots \\
+  &+ \frac{C_{k,1}}{(1-r_kx)} +
+  \frac{C_{k,2}}{(1-r_kx)^2} + \dots + \frac{C_{k,e_k}}{(1-r_kx)^{e_k}}
+\end{aligned}$
+
+for complex coefficients $\{ C_{1,1}, \dots, C_{k, e_k} \}$.
+
+This is useful because it allows one to reduce a quotient of polynomial to a
+state where it can be dealt with using the negative binomial theorem. For
+example, the quotient $A(x) = \frac{ 2 + 2x^2 }{ (1-2x)(1-7x) }$ can be reduced
+to a much more friendly form:
+
+$\begin{aligned}
+  A(x) &= \frac{-1}{ 1 - 2x } - \frac{1}{ ( 1 - 2x )^2 } + \frac{4}{ 1 - 7x }
+\end{aligned}$
+
+In this form, one can easily compute the coefficient of the $x^n$ using the
+negative binomial series for each individual term. This results in the following
+answer: $[x^n] A(x) = 2^n ( -n -2 ) + 4\cdot 7^n$.
+
+__Theorem__: Suppose that $f,g$ are polynomials with $\deg(f) < \deg(g)$ and $g$
+is of the form $g(x) = (1-r_1x)^{e_1} \dots (1-r_kx)^{e_k}$. Then, there exist
+polynomials $p_1. \dots, p_k$ such that $\deg( p_i ) \leq e_i$ for $1\leq i
+\leq k$ and $[x^n] \frac{f(x)}{g(x)} = p_1(x)r_1^n + \dots + p_k(x)r_k^n$.
+
+_Proof_: This comes pretty simply using the following claim, applied to the
+generalised partial fractions theorem.
+
+_Claim_: Let $c,r \in \mathbf{C}$ and $j\geq 1$. Then there is a degree $j-1$
+polynomial $q$ such that $[x^n] \frac{ c }{ (1-rx)^j } = q(n)r^n$.
+
+_Proof of claim_: We can use the negative binomial series here to expand the
+formal power series into a summation and then extract its coefficient as
+follows:
+
+$\begin{aligned}
+  [x^n] \frac{c}{(1-rx)^j} &= [x^n] c \sum_{k\geq 0} \binom{k + j - 1}{j - 1}
+  (rx)^j\\
+  &= c \binom{n+j-1}{j-1} r^n\\
+  &= cr^n \frac{(n+j-1)(n+j-2)\dots (n+1)}{(j-1)!}
+\end{aligned}$
+
+Note that the numerator has the form of a polynomial in $x$ evaluated at a value
+$n$ and the denominator is not at all dependent on $n$. This motivates us to
+define $q(x) = \frac{c}{(j-1)!}(x+j-1)(x+j-2)\dots (x+1)$, which is indeed a
+degree $j-1$ polynomial. This completes the proof of the claim.
+
+Now, using this claim with each row in the generalized form of the partial
+fractions expression, the theorem now holds. For a row $i$ in the partial
+fractions expression, one has $e_i$ such polynomials from the claim- each of
+them will be multiplied by an $r_i^n$ term and these can be factored to get
+$r_i$ multiplied by the sum of $e_i$ polynomials, of which the maixmum degree is
+$e_i -1$ by the claim above. Let this sum of polynomials be the polynomial
+$p_i(x)$. This completes the proof of the theorem.
+
+Now, this theorem gives us another way of quickly computing the coefficient of
+the $x^n$ term in a quotient of polynomials. One knows the form that the
+quotient will take, so what remains is to plug whatever available information
+exists in the context into this theorem and then attempt to compute the
+coefficients of the polynomials $p_1, \dots, p_k$.
+
